@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:22
 
 RUN groupadd -r appgroup && useradd -r -g appgroup mysuser
 
