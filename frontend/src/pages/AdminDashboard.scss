@@ -1,0 +1,36 @@
+.admin-dashboard {
+  text-align: center;
+  padding: 50px;
+
+  .form-section {
+    margin-bottom: 30px;
+
+    input, textarea {
+      display: block;
+      width: 300px;
+      margin: 10px auto;
+      padding: 8px;
+    }
+
+    button {
+      padding: 10px;
+      background: #16a085;
+      color: white;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background: #1abc9c;
+      }
+    }
+  }
+
+  .logout-btn {
+    margin-top: 20px;
+    padding: 10px;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+}

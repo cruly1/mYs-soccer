@@ -1,50 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import PlayerCard from "./PlayerCard";
 import PlayerModal from "./PlayerModal";
+import { getFirstFourPlayers } from "../services/api";
 import "./PlayersSection.scss";
 
-const playersData = [
-  {
-    name: "Cristiano Ronaldo",
-    position: "Forward",
-    club: "Al-Nassr",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg",
-    birthdate: "February 5, 1985",
-  },
-  {
-    name: "Cristiano Ronaldo",
-    position: "Forward",
-    club: "Al-Nassr",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg",
-    birthdate: "February 5, 1985",
-  },
-  {
-    name: "Cristiano Ronaldo",
-    position: "Forward",
-    club: "Al-Nassr",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg",
-    birthdate: "February 5, 1985",
-  },
-  {
-    name: "Cristiano Ronaldo",
-    position: "Forward",
-    club: "Al-Nassr",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg",
-    birthdate: "February 5, 1985",
-  },
-];
-
 const PlayersSection = () => {
+  const [players, setPlayers] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      const data = await getFirstFourPlayers();
+      setPlayers(data);
+    };
+
+    fetchPlayers();
+  }, []);
 
   return (
     <div className="players-wrapper">
       {/* Row for Player Cards */}
       <div className="players-row">
-        {playersData.slice(0, 4).map((player, index) => (
+        {players.map((player, index) => (
           <PlayerCard
             key={index}
             {...player}

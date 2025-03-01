@@ -11,6 +11,9 @@ import FinancialAdvices from "./pages/servicePages/FinancialAdvices";
 import MentalCoach from "./pages/servicePages/MentalCoach";
 import Nutrition from "./pages/servicePages/Nutrition";
 import Marketing from "./pages/servicePages/Marketing";
+import LoginPage from "./pages/LoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
+import NewsDetail from "./pages/NewsDetail";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -20,6 +23,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
+        <Route path="/news/:title" element={<NewsDetail />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/owners" element={<Owners />} />
@@ -28,6 +32,8 @@ const AnimatedRoutes = () => {
         <Route path="/services/mental-coach" element={<MentalCoach />} />
         <Route path="/services/nutrition" element={<Nutrition />} />
         <Route path="/services/marketing" element={<Marketing />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </AnimatePresence>
   );

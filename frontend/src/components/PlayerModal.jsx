@@ -12,7 +12,7 @@ const PlayerModal = ({ player, onClose }) => {
         <h2>{player.name}</h2>
         <p><strong>Position:</strong> {player.position}</p>
         <p><strong>Club:</strong> {player.club}</p>
-        <p><strong>Birthdate:</strong> {player.birthdate}</p>
+        <p><strong>Birthdate:</strong> {player.dateOfBirth}</p>
       </div>
     </div>
   );
