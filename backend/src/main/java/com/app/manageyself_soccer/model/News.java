@@ -1,5 +1,6 @@
 package com.app.manageyself_soccer.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "news")
@@ -25,7 +27,8 @@ public class News {
     private String title;
 
     @Column(name = "post_date")
-    private LocalDateTime postDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate postDate;
 
     @Column(name = "brief_content")
     private String briefContent;

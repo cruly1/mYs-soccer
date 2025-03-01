@@ -1,6 +1,7 @@
 package com.app.manageyself_soccer.model;
 
 import com.app.manageyself_soccer.model.enums.Position;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "players")
@@ -34,7 +35,8 @@ public class Player {
     private String name;
 
     @Column(name = "date_of_birth", nullable = false)
-    private LocalDateTime dateOfBirth;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dateOfBirth;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
