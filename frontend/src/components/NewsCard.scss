@@ -1,0 +1,134 @@
+$card-height-large-screen: 20rem;
+$card-height-mobile: 12rem;
+
+/* Responsive Mixins */
+@mixin atMedium {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin atLarge {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+
+.news-card {
+  margin: 0.5rem;
+  position: relative;
+  height: $card-height-mobile;
+  border-radius: 0.5rem;
+  flex: 1;
+  min-width: 290px;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+
+  @include atLarge {
+    height: $card-height-large-screen;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 80%);
+    z-index: 0;
+  }
+
+  &__card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 3s ease;
+    position: relative;
+    z-index: -1;
+  }
+
+  &__text-wrapper {
+    position: absolute;
+    bottom: 0rem;
+    padding: 1rem;
+    color: white;
+    transition: background-color 1.5s ease;
+  }
+
+  &__title {
+    transition: color 1s ease;
+    margin-bottom: 0.5rem;
+  }
+
+  &__post-date {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+  }
+
+  &__details-wrapper {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 1.5s ease, opacity 1s ease;
+  }
+
+  @include atLarge {
+    &:hover .news-card__details-wrapper {
+      max-height: $card-height-large-screen;
+      opacity: 1;
+    }
+
+    &:hover .news-card__text-wrapper {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &:hover .news-card__title {
+      color: yellow;
+    }
+
+    &:hover .news-card__image {
+      transform: scale(1.2);
+    }
+  }
+
+  &__excerpt {
+    font-weight: 300;
+  }
+
+  &__read-more {
+    background: black;
+    color: #bbb;
+    display: block;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.3rem;
+    margin-top: 1rem;
+    border: 1px solid #444;
+    font-size: 0.8rem;
+    text-decoration: none;
+    width: 7rem;
+    margin-left: auto;
+    position: relative;
+    z-index: 5;
+
+    i {
+      position: relative;
+      left: 0.2rem;
+      color: #888;
+      transition: left 0.5s ease, color 0.6s ease;
+    }
+
+    &:hover i {
+      left: 0.5rem;
+      color: yellow;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.about-us-page {
+  padding: 20px;
+  text-align: center;
+
+  button {
+    margin-top: 15px;
+    padding: 10px;
+    background: #2980b9;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: #3498db;
+    }
+  }
+}

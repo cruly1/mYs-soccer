@@ -1,0 +1,38 @@
+.owners-page {
+  padding: 20px;
+  text-align: center;
+
+  .owner-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px;
+    background: #e67e22;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: #d35400;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .owners-page .owner-info {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,36 @@
+.about-us-section {
+  padding: 20px;
+
+  .owners {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px;
+    background: #2980b9;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: #3498db;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-us-section .owners {
+    flex-direction: column;
+    align-items: center;
+  }
+}

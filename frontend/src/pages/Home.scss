@@ -1,0 +1,76 @@
+.home {
+  width: 100%;
+  height: 150vh; /* Ensure scrolling effect */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: url("../../public/Nagyerdei_dron_nyar-1__.jpg") no-repeat center center/cover;
+  z-index: -1;
+  transition: filter 0.3s ease-in-out;
+}
+
+/* Welcome text styling */
+.welcome-text {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Main Content Section */
+.main-content {
+  width: 100%;
+  /*background: rgba(0, 0, 0, 0.7);*/
+  margin-top: 100vh; /* Moves content below the background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Content starts below the navbar */
+.content {
+  padding: 20px;
+  width: 80%;
+  height: 42vh;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    width: 95%;
+  }
+
+  .welcome-text {
+    width: 90%;
+    font-size: 20px;
+  }
+}
