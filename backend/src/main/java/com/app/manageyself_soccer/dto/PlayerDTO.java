@@ -3,7 +3,7 @@ package com.app.manageyself_soccer.dto;
 import com.app.manageyself_soccer.model.enums.Position;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PlayerDTO {
     private String name;
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
     private Position position;
     private String imageName;
     private String imageType;

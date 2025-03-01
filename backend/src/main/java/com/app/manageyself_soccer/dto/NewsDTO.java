@@ -2,7 +2,7 @@ package com.app.manageyself_soccer.dto;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class NewsDTO {
     private String title;
-    private LocalDateTime postDate;
+    private LocalDate postDate;
     private String briefContent;
     private String content;
     private String imageName;
