@@ -34,3 +34,54 @@
     cursor: pointer;
   }
 }
+
+.admin-dashboard {
+  text-align: center;
+  padding: 50px;
+
+  .management-section {
+    margin-bottom: 40px;
+
+    h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .admin-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #b8b3b3;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+
+    input, textarea, select {
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+
+  .logout-btn {
+    margin-top: 20px;
+    padding: 10px;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+}

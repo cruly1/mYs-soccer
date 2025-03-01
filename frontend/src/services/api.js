@@ -42,12 +42,27 @@ export const addPlayer = async (playerData) => {
   }
 };
 
-export const updatePlayer = async (playerData) => {
-  return axios.put(`${API_BASE_URL}/players/updatePlayer`, playerData);
+export const updatePlayer = async (originalName, playerData) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/players/updatePlayer?name=${encodeURIComponent(originalName)}`,
+      playerData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating player:", error);
+    throw error;
+  }
 };
 
+
+// Delete player
 export const deletePlayer = async (name) => {
-  return axios.delete(`${API_BASE_URL}/players/deletePlayers?name=${name}`);
+  try {
+    await axios.delete(`${API_BASE_URL}/players/deletePlayer?name=${name}`);
+  } catch (error) {
+    console.error("Error deleting player:", error);
+  }
 };
 
 // **News API**
@@ -86,5 +101,27 @@ export const addNews = async (newsData) => {
     return response.data;
   } catch (error) {
     console.error("Error adding news:", error);
+  }
+};
+
+export const deleteNews = async (title) => {
+  try {
+    await axios.delete(`${API_BASE_URL}/news/deleteNews?title=${title}`);
+  } catch (error) {
+    console.error("Error deleting news:", error);
+  }
+};
+
+
+export const updateNews = async (originalTitle, newsData) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/news/updateNews?title=${encodeURIComponent(originalTitle)}`,
+      newsData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating news:", error);
+    throw error;
   }
 };
