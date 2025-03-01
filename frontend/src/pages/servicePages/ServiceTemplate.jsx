@@ -1,9 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./ServiceTemplate.scss";
 
 const ServiceTemplate = ({ title, description, topics, trainers, testimonials }) => {
-  return (
+    const navigate = useNavigate();
+    return (
+    
     <div className="service-page">
+      <button className="home-btn" onClick={() => { navigate("/"); }}>
+        Home
+      </button>
+      <button className="home-btn" onClick={() => { navigate("/services"); }}>
+        Take me back to the services
+      </button>
       {/* Service Title */}
       <h1>{title}</h1>
 
@@ -41,22 +50,9 @@ const ServiceTemplate = ({ title, description, topics, trainers, testimonials })
           </div>
         </div>
       )}
-
-      {/* Testimonials Section */}
-      {testimonials && testimonials.length > 0 && (
-        <div className="testimonials-section">
-          <h2>What Our Clients Say</h2>
-          <div className="testimonials-container">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card">
-                <p>"{testimonial.feedback}"</p>
-                <h4>- {testimonial.name}</h4>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      
     </div>
+    
   );
 };
 
