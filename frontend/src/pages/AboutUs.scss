@@ -1,17 +1,104 @@
 .about-us-page {
-  padding: 20px;
-  text-align: center;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Owner section (Green / Blue Background with Image) */
+.owner-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  transition: background-color 0.5s ease-in-out;
+
+  img {
+    width: 250px;
+    height: 350px;
+    border-radius: 20px;
+    border: 5px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Text Section (White Background, Black Text) */
+.text-section {
+  flex: 1;
+  background: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  height: 100%;
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #222;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 400px;
+  }
 
   button {
-    margin-top: 15px;
-    padding: 10px;
-    background: #2980b9;
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #f39c12;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
 
     &:hover {
-      background: #3498db;
+      background: #e67e22;
     }
+  }
+}
+
+/* Positioning Control */
+.owner-section.left {
+  order: 1; /* Image on Left */
+}
+
+.text-section.right {
+  order: 2; /* Text on Right */
+}
+
+.owner-section.right {
+  order: 2; /* Image on Right */
+}
+
+.text-section.left {
+  order: 1; /* Text on Left */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-us-page {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .owner-section {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .text-section {
+    width: 100%;
+    height: 50vh;
+    text-align: center;
   }
 }

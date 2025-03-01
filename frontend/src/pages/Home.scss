@@ -9,23 +9,22 @@
   position: relative;
 }
 
-.background-image {
+.home .background-image {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background: url("../../public/Nagyerdei_dron_nyar-1__.jpg") no-repeat center center/cover;
+  background: url("../../public/hero_picture.jpg") no-repeat center center/cover;
   z-index: -1;
   transition: filter 0.3s ease-in-out;
 }
 
 /* Welcome text styling */
 .welcome-text {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: sticky;
+  top: 15%;
+  z-index: 10;
   text-align: center;
   color: white;
   font-size: 24px;
@@ -33,7 +32,24 @@
   background: rgba(0, 0, 0, 0.7);
   padding: 20px;
   border-radius: 10px;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
+
+/* Fade out effect when scrolling */
+.scrolled .welcome-text {
+  opacity: 0;
+  transform: translateY(-30px);
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .welcome-text {
+    font-size: 20px;
+    width: 90%;
+  }
+}
+
 
 /* Main Content Section */
 .main-content {
@@ -49,7 +65,7 @@
 .content {
   padding: 20px;
   width: 80%;
-  height: 42vh;
+  height: 48vh;
   border-radius: 10px;
   text-align: center;
   background: rgba(0, 0, 0, 0.0);

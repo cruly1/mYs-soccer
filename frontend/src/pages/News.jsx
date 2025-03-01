@@ -1,17 +1,28 @@
 import React from "react";
-import { motion } from "framer-motion";
+import Footer from "../components/Footer";
+import NewsCard from "../components/NewsCard";
+import "./News.scss";
+
+const newsData = [
+  { title: "News 1", date: "Jan 1, 2025", excerpt: "Details about News 1...", image: "https://images.pexels.com/photos/127513/pexels-photo-127513.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" },
+  { title: "News 2", date: "Jan 2, 2025", excerpt: "Details about News 2...", image: "https://images.pexels.com/photos/631954/pexels-photo-631954.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" },
+  { title: "News 3", date: "Jan 3, 2025", excerpt: "Details about News 3...", image: "https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" },
+];
 
 const News = () => {
   return (
-    <motion.div
-      className="news-page"
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 100 }}
-    >
-      <h1>All News</h1>
-      <p>List of all news articles here...</p>
-    </motion.div>
+    <div className="news-page">
+     <div
+        className="background-image"
+      ></div>
+      <h2>All News</h2>
+      <div className="news-grid">
+        {newsData.map((news, index) => (
+          <NewsCard key={index} {...news} />
+        ))}
+      </div>
+      <Footer />
+    </div>
   );
 };
 

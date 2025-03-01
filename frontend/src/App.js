@@ -6,6 +6,11 @@ import News from "./pages/News";
 import Services from "./pages/Services";
 import AboutUs from "./pages/AboutUs";
 import Owners from "./pages/Owners";
+import PlayersPage from "./pages/PlayersPage";
+import FinancialAdvices from "./pages/servicePages/FinancialAdvices";
+import MentalCoach from "./pages/servicePages/MentalCoach";
+import Nutrition from "./pages/servicePages/Nutrition";
+import Marketing from "./pages/servicePages/Marketing";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -18,6 +23,11 @@ const AnimatedRoutes = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/owners" element={<Owners />} />
+        <Route path="/players" element={<PlayersPage />} />
+        <Route path="/services/financial-advices" element={<FinancialAdvices />} />
+        <Route path="/services/mental-coach" element={<MentalCoach />} />
+        <Route path="/services/nutrition" element={<Nutrition />} />
+        <Route path="/services/marketing" element={<Marketing />} />
       </Routes>
     </AnimatePresence>
   );

@@ -1,25 +1,52 @@
 .about-us-section {
-  padding: 20px;
+  padding: 30px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #fff;
+  }
 
   .owners {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
+    margin-bottom: 20px;
 
     img {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
+      border: 3px solid #2980b9;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
+  .about-description {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #ddd;
+    text-align: justify;
+    padding: 0 10px;
+  }
+
   button {
-    margin-top: 15px;
-    padding: 10px;
+    margin-top: 20px;
+    padding: 12px 20px;
     background: #2980b9;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
 
     &:hover {
       background: #3498db;
@@ -29,8 +56,16 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .about-us-section .owners {
+  .about-us-section {
+    padding: 20px;
+  }
+
+  .owners {
     flex-direction: column;
     align-items: center;
+  }
+
+  .about-description {
+    font-size: 14px;
   }
 }

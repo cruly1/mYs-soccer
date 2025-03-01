@@ -29,22 +29,46 @@
 }
 
 .players-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); // Default 2 per row
-  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 30px; // Ensures space below for the button
+}
+
+.players-row {
+  display: flex;
   justify-content: center;
-  max-width: 600px; // Ensures proper alignment
-  margin: 0 auto; // Centers the grid
-  padding-top: 60px;
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr; // 1 per row on mobile
+  gap: 1.5rem;
+  
+  max-width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column; // Stack players vertically on mobile
+    align-items: center;
   }
 }
 
-.player-card {
-  width: 100%;
-  max-width: 250px;
+.view-all-players-btn {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  width: 200px;
+
+  &:hover {
+    background: #d35400;
+  }
 }
+
+
 
 
 /* Responsive */

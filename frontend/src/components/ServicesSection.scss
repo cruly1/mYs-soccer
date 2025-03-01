@@ -19,6 +19,9 @@
     width: 30%;
     text-align: center;
     transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     img {
       width: 100%;
@@ -27,10 +30,19 @@
       border-radius: 5px;
     }
 
-    p {
+    h3 {
       margin-top: 10px;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
+      color: white;
+    }
+
+    .service-description {
+      font-size: 14px;
+      color: #ddd;
+      margin-top: 8px;
+      text-align: center;
+      padding: 0 10px;
     }
 
     &:hover {

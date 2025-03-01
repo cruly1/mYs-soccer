@@ -1,26 +1,34 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
+import "./Services.scss";
+
+const services = [
+  { name: "Mental Coach", description: "Improve mental resilience and performance under pressure.", path: "/services/mental-coach"  },
+  { name: "Marketing", description: "Boost your personal brand and sponsorship deals.", path: "/services/marketing"},
+  { name: "Nutrition", description: "Personalized meal plans for peak athletic performance.", path: "/services/nutrition" },
+  { name: "Financial Advice", path: "/services/financial-advices" },
+];
 
 const Services = () => {
-  return (
-    <motion.div
-      className="services-page"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-    >
-      <h1>Our Services</h1>
-      <ul>
-        <li>Mental Coach</li>
-        <li>Marketing</li>
-        <li>Nutrition</li>
-        <li>Rehabilitation</li>
-        <li>Language Education</li>
-        <li>Functional Training</li>
-        <li>Financial Advice</li>
-        <li>Individual Training</li>
-      </ul>
-    </motion.div>
+   const navigate = useNavigate();
+    return (
+    <div className="services-page">
+    <div
+        className="background-image"
+      ></div>
+      <h2>Our Services</h2>
+      <div className="services-list">
+        {services.map((service, index) => (
+          <div key={index} className="service-item">
+            <h3>{service.name}</h3>
+            <p>{service.description}</p>
+            <button onClick={() => navigate(service.path)}>Learn More</button>
+          </div>
+        ))}
+      </div>
+      <Footer />
+    </div>
   );
 };
 

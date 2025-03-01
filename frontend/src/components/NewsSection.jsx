@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import NewsCard from "./NewsCard";
 import "./NewsSection.scss";
 
@@ -37,12 +38,15 @@ const newsData = [
 ];
 
 const NewsSection = () => {
+    const navigate = useNavigate();
   return (
     <div className="content-wrapper">
       {newsData.map((news, index) => (
         <NewsCard key={index} {...news} />
       ))}
+      <button onClick={() => navigate("/news")}>View All News</button>
     </div>
+    
   );
 };
 

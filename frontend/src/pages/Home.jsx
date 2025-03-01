@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import NewsSection from "../components/NewsSection";
 import PlayersSection from "../components/PlayersSection";
@@ -12,7 +12,20 @@ import "./Home.scss";
 const Home = () => {
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("NEWS");
+  const contentRef = useRef(null);
 
+  // Automatically scroll to content on first load
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (contentRef.current) {
+        contentRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 1000); // Delay to ensure page loads smoothly
+
+    return () => clearTimeout(timeout); // Cleanup timeout on unmount
+  }, []);
+
+  // Handle scroll for background blur effect
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -40,11 +53,10 @@ const Home = () => {
         <p>Your ultimate platform to manage players, teams, and events easily!</p>
       </div>
 
-      {/* Navbar is always visible inside the content section */}
-      <div className="main-content">
+      {/* Main Content Section (scroll target) */}
+      <div className="main-content" ref={contentRef}>
         <Navbar setActiveSection={setActiveSection} />
 
-        {/* Animated Content Sections */}
         <div className="content">
           <AnimatePresence mode="wait">
             {activeSection === "NEWS" && (
@@ -105,6 +117,7 @@ const Home = () => {
           </AnimatePresence>
         </div>
       </div>
+
       {/* Footer */}
       <Footer />
     </div>
