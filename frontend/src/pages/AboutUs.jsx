@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import "./AboutUs.scss";
 
@@ -20,6 +21,7 @@ const owners = [
 ];
 
 const AboutUs = () => {
+  const navigate = useNavigate();
   const [currentOwner, setCurrentOwner] = useState(0);
   const [fadeIn, setFadeIn] = useState(false);
 
@@ -66,6 +68,9 @@ const AboutUs = () => {
           <p>{owners[currentOwner].description}</p>
           <button onClick={switchOwner}>Switch Owner</button>
         </motion.div>
+        <button className="home-btn" onClick={() => { navigate("/"); }}>
+        Home
+      </button>
       </div>
     </motion.div>
   );
