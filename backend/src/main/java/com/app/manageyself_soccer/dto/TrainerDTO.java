@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class TrainerDTO {
-    private Long id;
     private String name;
     private String briefContent;
     private String imageName;
