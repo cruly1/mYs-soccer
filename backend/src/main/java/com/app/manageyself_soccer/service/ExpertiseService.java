@@ -11,6 +11,7 @@ import com.app.manageyself_soccer.mapper.TrainerMapper;
 import com.app.manageyself_soccer.model.Expertise;
 import com.app.manageyself_soccer.model.Trainer;
 import com.app.manageyself_soccer.payload.CreateStudiesRequest;
+import com.app.manageyself_soccer.payload.DeleteStudyRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,7 +85,7 @@ public class ExpertiseService {
 
         expertise.setTitle(expertiseDTO.getTitle());
         expertise.setBriefContent(expertiseDTO.getBriefContent());
-        expertise.setContent(expertiseDTO.getBriefContent());
+        expertise.setContent(expertiseDTO.getContent());
         expertise.setStudy(expertiseDTO.getStudy());
         expertise.setImageName(expertiseDTO.getImageName());
         expertise.setImageName(expertiseDTO.getImageType());
@@ -116,5 +117,16 @@ public class ExpertiseService {
         expertiseRepository.save(expertise);
 
         return "Trainer deleted.";
+    }
+
+    public String deleteStudyFromExpertise(String title, DeleteStudyRequest study) {
+        Expertise expertise = expertiseRepository.findByTitle(title)
+                .orElseThrow(() -> new ExpertiseNotFoundException("Expertise not found."));
+
+        expertise.getStudy().remove(study);
+
+        expertiseRepository.save(expertise);
+
+        return "Study deleted.";
     }
 }

@@ -3,6 +3,7 @@ package com.app.manageyself_soccer.controller;
 import com.app.manageyself_soccer.dto.ExpertiseDTO;
 import com.app.manageyself_soccer.dto.TrainerDTO;
 import com.app.manageyself_soccer.payload.CreateStudiesRequest;
+import com.app.manageyself_soccer.payload.DeleteStudyRequest;
 import com.app.manageyself_soccer.service.ExpertiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,12 @@ public class ExpertiseController {
     @DeleteMapping("/deleteTrainer")
     public ResponseEntity<String> deleteTrainer(@RequestParam("title") String title, @RequestParam("name") String name) {
         String result = expertiseService.deleteTrainer(title, name);
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/deleteStudyFromExpertise")
+    public ResponseEntity<String> deleteStudyFromExpertise(@RequestParam String title, @RequestBody DeleteStudyRequest request) {
+        String result = expertiseService.deleteStudyFromExpertise(title, request);
         return ResponseEntity.ok(result);
     }
 }
