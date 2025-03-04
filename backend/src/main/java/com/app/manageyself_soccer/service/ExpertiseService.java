@@ -68,14 +68,10 @@ public class ExpertiseService {
         Expertise expertise = expertiseRepository.findByTitle(title)
                 .orElseThrow(() -> new ExpertiseNotFoundException("Expertise not found."));
 
-        Set<TrainerDTO> trainerDTOs = expertiseDTO.getTrainers();
-        Set<Trainer> trainers = trainerDTOs.stream().map(trainerMapper::toTrainer).collect(Collectors.toSet());
-
         expertise.setTitle(expertiseDTO.getTitle());
         expertise.setBriefContent(expertiseDTO.getBriefContent());
         expertise.setContent(expertiseDTO.getBriefContent());
         expertise.setStudy(expertiseDTO.getStudy());
-        expertise.setTrainers(trainers);
         expertise.setImageName(expertiseDTO.getImageName());
         expertise.setImageName(expertiseDTO.getImageType());
 
