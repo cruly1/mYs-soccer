@@ -43,19 +43,19 @@ public class ExpertiseController {
     }
 
     @PutMapping("/updateExpertise")
-    public ResponseEntity<ExpertiseDTO> updateExpertise(@RequestParam String title, @RequestBody ExpertiseDTO dto) {
+    public ResponseEntity<ExpertiseDTO> updateExpertise(@RequestParam("title") String title, @RequestBody ExpertiseDTO dto) {
         ExpertiseDTO result = expertiseService.updateExpertise(title, dto);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/deleteExpertise")
-    public ResponseEntity<String> deleteExpertise(@RequestParam String title) {
+    public ResponseEntity<String> deleteExpertise(@RequestParam("title") String title) {
         String result = expertiseService.deleteExpertise(title);
         return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/deleteTrainer")
-    public ResponseEntity<String> deleteTrainer(@RequestParam String title, @RequestParam String name) {
+    public ResponseEntity<String> deleteTrainer(@RequestParam("title") String title, @RequestParam("name") String name) {
         String result = expertiseService.deleteTrainer(title, name);
         return ResponseEntity.ok(result);
     }
