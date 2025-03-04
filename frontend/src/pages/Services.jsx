@@ -1,32 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import { getAllExpertise } from "../services/api";
 import "./Services.scss";
 
-const services = [
-  { name: "Mental Coach", description: "Improve mental resilience and performance under pressure.", path: "/services/mental-coach"  },
-  { name: "Marketing", description: "Boost your personal brand and sponsorship deals.", path: "/services/marketing"},
-  { name: "Nutrition", description: "Personalized meal plans for peak athletic performance.", path: "/services/nutrition" },
-  { name: "Financial Advice", path: "/services/financial-advices" },
-];
-
 const Services = () => {
-   const navigate = useNavigate();
-    return (
+  const navigate = useNavigate();
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const data = await getAllExpertise();
+      setServices(data);
+    };
+    fetchServices();
+  }, []);
+
+  return (
     <div className="services-page">
-    <div
-        className="background-image"
-      ></div>
-      <h2>Our Services</h2>
-      <div className="services-list">
-        {services.map((service, index) => (
-          <div key={index} className="service-item">
-            <h3>{service.name}</h3>
-            <p>{service.description}</p>
-            <button onClick={() => navigate(service.path)}>Learn More</button>
-          </div>
-        ))}
+      {/* Background Image */}
+      <div className="background-image"></div>
+    
+      {/* Navigation Buttons */}<div className="service-nav">
+        <button onClick={() => navigate("/")}>🏠 Home</button>
+        
       </div>
+      <h2>Our Services</h2>
+
+      {/* Services List */}
+      <div className="services-list">
+        {services.length > 0 ? (
+          services.map((service, index) => (
+            <div key={index} className="service-item">
+              <h3>{service.title}</h3>
+              <p>{service.briefContent || "Click below to learn more."}</p>
+              <button onClick={() => navigate(`/services/${service.title.replace(/\s+/g, "%20")}`)}>
+                Learn More
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>Loading services...</p>
+        )}
+      </div>
+
       <Footer />
     </div>
   );

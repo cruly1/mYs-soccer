@@ -58,20 +58,25 @@ const AboutUs = () => {
 
       <div className={`text-section ${currentOwner === 0 ? "right" : "left"}`}>
         <motion.div
-          key={`text-${currentOwner}`}
-          initial={{ opacity: 0, x: currentOwner === 0 ? 100 : -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: currentOwner === 0 ? -100 : 100 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2>{owners[currentOwner].name}</h2>
-          <p>{owners[currentOwner].description}</p>
-          <button onClick={switchOwner}>Switch Owner</button>
-        </motion.div>
-        <button className="home-btn" onClick={() => { navigate("/"); }}>
-        Home
-      </button>
+  key={`text-${currentOwner}`}
+  initial={{ opacity: 0, x: currentOwner === 0 ? 100 : -100 }}
+  animate={{ opacity: 1, x: 0 }}
+  exit={{ opacity: 0, x: currentOwner === 0 ? -100 : 100 }}
+  transition={{ duration: 0.5 }}
+>
+  <h2>{owners[currentOwner].name}</h2>
+  <p>{owners[currentOwner].description}</p>
+  
+  {/* ✅ Grouping Buttons in a Flexbox */}
+  <div className="button-group">
+    <button onClick={switchOwner}>Switch Owner</button>
+    <button className="home-btn" onClick={() => navigate("/")}>Home</button>
+  </div>
+</motion.div>
+
+        
       </div>
+      
     </motion.div>
   );
 };

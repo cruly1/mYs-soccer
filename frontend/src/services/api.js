@@ -125,3 +125,89 @@ export const updateNews = async (originalTitle, newsData) => {
     throw error;
   }
 };
+
+
+export const getExpertiseByTitle = async (title) => {
+  try {
+    const encodedTitle = encodeURIComponent(title); // ✅ Ensures spaces are correctly handled
+    const response = await axios.get(`${API_BASE_URL}/expertise/getExpertiseByTitle?title=${encodedTitle}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching expertise:", error.response?.data || error.message);
+    return null;
+  }
+};
+
+
+
+
+export const getAllExpertise = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/expertise/getAllExpertise`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all expertise:", error);
+    return [];
+  }
+};
+
+export const createExpertise = async (expertiseData) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/expertise/createExpertise`, expertiseData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating expertise:", error);
+    throw error;
+  }
+};
+
+export const updateExpertise = async (title, expertiseData) => {
+  try {
+    const response = await axios.put(`${API_BASE_URL}/expertise/updateExpertise?title=${encodeURIComponent(title)}`, expertiseData);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating expertise:", error);
+    throw error;
+  }
+};
+
+export const deleteExpertise = async (title) => {
+  try {
+    await axios.delete(`${API_BASE_URL}/expertise/deleteExpertise?title=${encodeURIComponent(title)}`);
+  } catch (error) {
+    console.error("Error deleting expertise:", error);
+    throw error;
+  }
+};
+
+// Trainer API Calls
+export const createTrainer = async (title, trainerData) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/expertise/createTrainer?title=${encodeURIComponent(title)}`, trainerData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating trainer:", error);
+    throw error;
+  }
+};
+
+export const deleteTrainer = async (title, name) => {
+  try {
+    await axios.delete(`${API_BASE_URL}/expertise/deleteTrainer?title=${encodeURIComponent(title)}&name=${encodeURIComponent(name)}`);
+  } catch (error) {
+    console.error("Error deleting trainer:", error);
+    throw error;
+  }
+};
+
+export const createStudies = async (title, studies) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/expertise/createStudies?title=${encodeURIComponent(title)}`, {
+      studies: studies,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating studies:", error.response?.data || error.message);
+    return null;
+  }
+};

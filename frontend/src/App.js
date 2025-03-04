@@ -7,10 +7,7 @@ import Services from "./pages/Services";
 import AboutUs from "./pages/AboutUs";
 import Owners from "./pages/Owners";
 import PlayersPage from "./pages/PlayersPage";
-import FinancialAdvices from "./pages/servicePages/FinancialAdvices";
-import MentalCoach from "./pages/servicePages/MentalCoach";
-import Nutrition from "./pages/servicePages/Nutrition";
-import Marketing from "./pages/servicePages/Marketing";
+import ServicePage from "./pages/ServicePage";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import NewsDetail from "./pages/NewsDetail";
@@ -25,13 +22,10 @@ const AnimatedRoutes = () => {
         <Route path="/news" element={<News />} />
         <Route path="/news/:title" element={<NewsDetail />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/services/:title" element={<ServicePage />} /> {/* ✅ Dynamic Service Route */}
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/owners" element={<Owners />} />
         <Route path="/players" element={<PlayersPage />} />
-        <Route path="/services/financial-advices" element={<FinancialAdvices />} />
-        <Route path="/services/mental-coach" element={<MentalCoach />} />
-        <Route path="/services/nutrition" element={<Nutrition />} />
-        <Route path="/services/marketing" element={<Marketing />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
