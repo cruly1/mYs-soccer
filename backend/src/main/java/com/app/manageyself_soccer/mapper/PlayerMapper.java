@@ -2,24 +2,12 @@ package com.app.manageyself_soccer.mapper;
 
 import com.app.manageyself_soccer.dto.PlayerDTO;
 import com.app.manageyself_soccer.model.Player;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class PlayerMapper {
+@Mapper(componentModel = "spring")
+public interface PlayerMapper {
 
-    public PlayerDTO toDTO(Player player) {
-        return PlayerDTO.builder()
-                .name(player.getName())
-                .dateOfBirth(player.getDateOfBirth())
-                .position(player.getPosition())
-                .build();
-    }
+    PlayerDTO toPlayerDTO(Player player);
+    Player toPlayer(PlayerDTO playerDTO);
 
-    public Player toEntity(PlayerDTO playerDTO) {
-        return Player.builder()
-                .name(playerDTO.getName())
-                .dateOfBirth(playerDTO.getDateOfBirth())
-                .position(playerDTO.getPosition())
-                .build();
-    }
 }

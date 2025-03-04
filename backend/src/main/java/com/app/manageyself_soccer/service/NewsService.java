@@ -23,21 +23,21 @@ public class NewsService {
         News news = newsRepository.findByTitle(title)
                 .orElseThrow(() -> new NewsNotFoundException(newsNotFound));
 
-        return newsMapper.toDTO(news);
+        return newsMapper.toNewsDTO(news);
     }
 
     public List<NewsDTO> getAllNews() {
         List<News> news = newsRepository.findAll();
-        return news.stream().map(newsMapper::toDTO).toList();
+        return news.stream().map(newsMapper::toNewsDTO).toList();
     }
 
     public List<NewsDTO> getFirstFourNews() {
         List<News> news = newsRepository.findTop4ByOrderByPostDateDesc();
-        return news.stream().map(newsMapper::toDTO).toList();
+        return news.stream().map(newsMapper::toNewsDTO).toList();
     }
 
     public NewsDTO addNews(NewsDTO newsDTO) {
-        News news = newsMapper.toEntity(newsDTO);
+        News news = newsMapper.toNews(newsDTO);
         newsRepository.save(news);
         return newsDTO;
     }

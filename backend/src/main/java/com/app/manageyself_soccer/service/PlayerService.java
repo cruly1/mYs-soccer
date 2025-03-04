@@ -22,21 +22,21 @@ public class PlayerService {
     public PlayerDTO getPlayerByName(String name) {
         Player player = playerRepository.findByName(name)
                 .orElseThrow(() -> new PlayerNotFoundException(playerNotFound));
-        return playerMapper.toDTO(player);
+        return playerMapper.toPlayerDTO(player);
     }
 
     public List<PlayerDTO> getAllPlayers() {
         List<Player> players = playerRepository.findAll();
-        return players.stream().map(playerMapper::toDTO).toList();
+        return players.stream().map(playerMapper::toPlayerDTO).toList();
     }
 
     public List<PlayerDTO> getFirstFourPlayers() {
         List<Player> players = playerRepository.findTop4ByOrderByNameAsc();
-        return players.stream().map(playerMapper::toDTO).toList();
+        return players.stream().map(playerMapper::toPlayerDTO).toList();
     }
 
     public PlayerDTO addPlayer(PlayerDTO playerDTO) {
-        playerRepository.save(playerMapper.toEntity(playerDTO));
+        playerRepository.save(playerMapper.toPlayer(playerDTO));
         return playerDTO;
     }
 
