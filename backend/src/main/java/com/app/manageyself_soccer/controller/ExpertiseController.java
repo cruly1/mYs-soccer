@@ -2,6 +2,7 @@ package com.app.manageyself_soccer.controller;
 
 import com.app.manageyself_soccer.dto.ExpertiseDTO;
 import com.app.manageyself_soccer.dto.TrainerDTO;
+import com.app.manageyself_soccer.payload.CreateStudiesRequest;
 import com.app.manageyself_soccer.service.ExpertiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,12 @@ public class ExpertiseController {
     @PostMapping("/createTrainer")
     public ResponseEntity<ExpertiseDTO> createTrainer(@RequestParam("title") String title, @RequestBody TrainerDTO dto) {
         ExpertiseDTO result = expertiseService.createTrainer(title, dto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/createStudies")
+    public ResponseEntity<ExpertiseDTO> createStudies(@RequestParam("title") String title, @RequestBody CreateStudiesRequest request) {
+        ExpertiseDTO result = expertiseService.createStudies(title, request);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 

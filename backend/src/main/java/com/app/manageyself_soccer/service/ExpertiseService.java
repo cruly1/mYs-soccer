@@ -10,6 +10,7 @@ import com.app.manageyself_soccer.mapper.ExpertiseMapper;
 import com.app.manageyself_soccer.mapper.TrainerMapper;
 import com.app.manageyself_soccer.model.Expertise;
 import com.app.manageyself_soccer.model.Trainer;
+import com.app.manageyself_soccer.payload.CreateStudiesRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +60,19 @@ public class ExpertiseService {
         expertise.setTrainers(trainers);
 
         trainerRepository.save(trainer);
+        expertiseRepository.save(expertise);
+
+        return expertiseMapper.toExpertiseDTO(expertise);
+    }
+
+    public ExpertiseDTO createStudies(String title, CreateStudiesRequest studies) {
+        Expertise expertise = expertiseRepository.findByTitle(title)
+                .orElseThrow(() -> new ExpertiseNotFoundException("Expertise not found."));
+
+        Set<String> currentStudies = expertise.getStudy();
+        currentStudies.addAll(studies.getStudies());
+        expertise.setStudy(currentStudies);
+
         expertiseRepository.save(expertise);
 
         return expertiseMapper.toExpertiseDTO(expertise);
