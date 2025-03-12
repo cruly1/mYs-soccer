@@ -22,7 +22,7 @@ const NewsSection = () => {
       {news.map((newsItem, index) => (
         <NewsCard key={index} {...newsItem} />
       ))}
-      <button onClick={() => navigate("/news")}>View All News</button>
+      <button className="news-section-button" onClick={() => navigate("/news")}>View All News</button>
     </div>
   );
 };

@@ -60,7 +60,7 @@
     button {
       margin-top: 10px;
       padding: 8px 12px;
-      background: #2980b9;
+      background-color: #2980b9;;
       color: white;
       border: none;
       cursor: pointer;
@@ -69,11 +69,14 @@
       transition: 0.3s;
 
       &:hover {
-        background: #1f618d;
+        color: white;
+        background: #3498db;
       }
     }
   }
 }
+
+
 
 /* Responsive */
 @media (max-width: 768px) {

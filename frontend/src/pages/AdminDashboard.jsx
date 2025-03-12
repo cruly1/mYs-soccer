@@ -200,10 +200,6 @@ const handleAddService = async () => {
   }
 };
 
-
-
-
-
 useEffect(() => {
     fetchPlayers();
     fetchNews();

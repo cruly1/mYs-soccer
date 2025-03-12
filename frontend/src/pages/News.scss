@@ -19,5 +19,22 @@
   background: url("../../public/Nagyerdei_dron_nyar-1__.jpg") no-repeat center center/cover;
   z-index: -1;
   
+  }
 }
+
+.home-btn{
+  background-color: #2980b9;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+  margin-top: 20px;
+  width: 200px;
+  &:hover {
+    color: white;
+  background: #3498db;
+  }
 }
+

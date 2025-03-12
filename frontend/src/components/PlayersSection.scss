@@ -54,7 +54,6 @@
 .view-all-players-btn {
   margin-top: 20px;
   padding: 12px 20px;
-  background: #e67e22;
   color: white;
   border: none;
   border-radius: 5px;
@@ -64,11 +63,18 @@
   width: 200px;
 
   &:hover {
-    background: #d35400;
+    color: white;
   }
 }
 
+.view-all-players-btn{
+  background-color: #2980b9;
+}
 
+.view-all-players-btn:hover{
+  color: white;
+  background: #3498db;
+}
 
 
 /* Responsive */

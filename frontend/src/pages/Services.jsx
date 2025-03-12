@@ -22,7 +22,7 @@ const Services = () => {
       <div className="background-image"></div>
     
       {/* Navigation Buttons */}<div className="service-nav">
-        <button onClick={() => navigate("/")}>🏠 Home</button>
+        <button className="home-btn" onClick={() => navigate("/")}>Home</button>
         
       </div>
       <h2>Our Services</h2>

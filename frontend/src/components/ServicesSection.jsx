@@ -26,7 +26,7 @@ const ServicesSection = () => {
           </div>
         ))}
       </div>
-      <button onClick={() => navigate("/services")}>View All Services</button>
+      <button className="serice-section-button" onClick={() => navigate("/services")}>View All Services</button>
     </div>
   );
 };

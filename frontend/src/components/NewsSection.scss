@@ -29,6 +29,16 @@
   }
 }
 
+.news-section-button{
+  background-color: #2980b9;
+  border-radius: 5px;
+}
+
+.news-section-button:hover{
+  color: white;
+  background: #3498db;
+}
+
 .content-wrapper {
   margin: 0 auto;
   max-width: 1200px;
