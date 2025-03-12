@@ -22,28 +22,34 @@ const PlayersSection = () => {
 
   return (
     <div className="players-wrapper">
-      {/* Row for Player Cards */}
-      <div className="players-row">
-        {players.map((player, index) => (
-          <PlayerCard
-            key={index}
-            {...player}
-            onClick={() => setSelectedPlayer(player)}
-          />
-        ))}
-      </div>
+       {players.length > 0 ? (
+        <>
+          {/* Row for Player Cards */}
+          <div className="players-row">
+            {players.map((player, index) => (
+              <PlayerCard
+                key={index}
+                {...player}
+                onClick={() => setSelectedPlayer(player)}
+              />
+            ))}
+          </div>
 
-      {/* Animated Modal */}
-      <AnimatePresence>
-        {selectedPlayer && (
-          <PlayerModal player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
-        )}
-      </AnimatePresence>
+          {/* Animated Modal */}
+          <AnimatePresence>
+            {selectedPlayer && (
+              <PlayerModal player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
+            )}
+          </AnimatePresence>
 
-      {/* View All Players Button */}
-      <button className="view-all-players-btn" onClick={() => navigate("/players")}>
-        View All Players
-      </button>
+          {/* View All Players Button */}
+          <button className="view-all-players-btn" onClick={() => navigate("/players")}>
+            View All Players
+          </button>
+        </>
+      ) : (
+        <p>No players available at the moment.</p>
+      )}
     </div>
   );
 };

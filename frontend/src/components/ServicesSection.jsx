@@ -17,16 +17,26 @@ const ServicesSection = () => {
 
   return (
     <div className="services-section">
-      <h2>Our Services</h2>
-      <div className="services-container">
-        {services.slice(0, 3).map((service, index) => (
-          <div key={index} className="service-card">
-            <h3>{service.title}</h3>
-            <p>{service.briefContent}</p>
+       {services.length > 0 ? (
+        <>
+          <div className="services-container">
+            {services.slice(0, 3).map((service, index) => (
+              <div key={index} className="service-card">
+                <h3>{service.title}</h3>
+                <p>{service.briefContent}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <button className="serice-section-button" onClick={() => navigate("/services")}>View All Services</button>
+          <button
+            className="service-section-button"
+            onClick={() => navigate("/services")}
+          >
+            View All Services
+          </button>
+        </>
+      ) : (
+        <p>No services available at the moment.</p>
+      )}
     </div>
   );
 };
