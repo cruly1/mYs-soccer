@@ -1,22 +1,25 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./NewsCard.scss";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './NewsCard.scss';
 
-const NewsCard = ({ title, date, briefContent, image, link }) => {
-    const navigate = useNavigate();
+const NewsCard = ({ title, postDate, briefContent, imageName }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="news-card" onClick={() => navigate(`/news/${title}`)}> {/* Navigate to news detail */}
-      <a href={link} className="news-card__card-link"></a>
-      <img src={image} alt={title} className="news-card__image" />
-      <div className="news-card__text-wrapper">
-        <h2 className="news-card__title">{title}</h2>
-        <div className="news-card__post-date">{date}</div>
-        <div className="news-card__details-wrapper">
-          <p className="news-card__excerpt">{briefContent}</p> {/* Fixed field name */}
-          <a href={link} className="news-card__read-more">
-            Read more <i className="fas fa-long-arrow-alt-right"></i>
-          </a>
-        </div>
+    <div className="news-card">
+      {/* Image */}
+      <div className="news-card__image" style={{ backgroundImage: `url(${imageName || "/default-news.jpg"})` }}></div>
+
+      {/* Content */}
+      <div className="news-card__content">
+        <span className="news-card__date">{new Date(postDate).toDateString()}</span>
+        <h3 className="news-card__title">{title}</h3>
+        <p className="news-card__brief">{briefContent}</p>
+
+        {/* Read More Button */}
+        <button className="news-card__button" onClick={() => navigate(`/news/${title}`)}>
+          Read More
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,87 @@
+/* 🔹 Carousel Container */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  margin: 0 -5em;
+  perspective: 600px;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔹 Card Container */
+.card-container {
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  transform: 
+    rotateY(calc(var(--offset) * 50deg)) 
+    scaleY(calc(1 + var(--abs-offset) * -0.4))
+    translateZ(calc(var(--abs-offset) * -25rem))
+    translateX(calc(var(--direction) * -3rem));
+  filter: blur(calc(var(--abs-offset) * 1rem));
+  transition: all 0.3s ease-out;
+}
+.card-container {
+  display: flex;
+  justify-content: center; /* ✅ Ensures cards are centered */
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  max-width: 400px; /* ✅ Adjust width */
+  height: auto;
+  text-align: center;
+}
+
+/* 🔹 Navigation Buttons */
+.nav {
+  color: rgb(0, 255, 242);
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.left {
+  left: -5em;
+}
+
+.right {
+  right: -7em;
+}
+
+/* 🔹 Responsive */
+@media (max-width: 768px) {
+  .carousel {
+    width: 50%;
+  }
+
+  .card-container {
+    width: 90%;
+    height: 90%;
+    transform: 
+      rotateY(calc(var(--offset) * 30deg)) 
+      scaleY(calc(1 + var(--abs-offset) * -0.2)) 
+      translateZ(calc(var(--abs-offset) * -20rem)) 
+      translateX(calc(var(--direction) * -2rem));
+  }
+
+  .nav {
+    font-size: 2rem;
+  }
+
+  .left {
+  left: -0.5em;
+}
+
+.right {
+  right: -8em;
+}
+}

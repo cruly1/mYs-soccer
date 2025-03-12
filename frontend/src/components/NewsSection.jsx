@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import NewsCard from "./NewsCard";
 import { getFirstFourNews } from "../services/api";
+import NewsCard from "./NewsCard";
+import Carousel from "../components/Carousel"; // Using existing carousel
 import "./NewsSection.scss";
 
 const NewsSection = () => {
-  const navigate = useNavigate();
   const [news, setNews] = useState([]);
 
   useEffect(() => {
@@ -18,11 +17,16 @@ const NewsSection = () => {
   }, []);
 
   return (
-    <div className="content-wrapper">
-      {news.map((newsItem, index) => (
-        <NewsCard key={index} {...newsItem} />
-      ))}
-      <button className="news-section-button" onClick={() => navigate("/news")}>View All News</button>
+    <div className="news-section">
+      <h2>Latest News</h2>
+      <div className="reference-container">
+      {/* 🔹 Carousel Integration */}
+      <Carousel>
+        {news.map((newsItem, index) => (
+          <NewsCard key={index} {...newsItem} />
+        ))}
+      </Carousel>
+      </div>
     </div>
   );
 };

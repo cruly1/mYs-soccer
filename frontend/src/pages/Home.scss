@@ -23,7 +23,7 @@
 /* Welcome text styling */
 .welcome-text {
   position: sticky;
-  top: 15%;
+  top: 7%;
   z-index: 10;
   text-align: center;
   color: white;
@@ -65,7 +65,7 @@
 .content {
   padding: 20px;
   width: 80%;
-  height: 48vh;
+  height: 59vh;
   border-radius: 10px;
   text-align: center;
   background: rgba(0, 0, 0, 0.0);
@@ -82,7 +82,7 @@
 /* 🔹 Responsive */
 @media (max-width: 768px) {
   .welcome-text {
-    font-size: 20px;
+    font-size: 16px;
     width: 60%;
     top: 5%;
   }

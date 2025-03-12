@@ -1,65 +1,65 @@
 .news-section {
-  padding: 20px;
+  padding: 40px 20px;
+  text-align: center;
+  
+  border-radius: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
 
+  h2 {
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  /* 🔹 News Container */
   .news-container {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
-
-    .news-item {
-      background: #444;
-      padding: 15px;
-      border-radius: 5px;
-      width: 23%;
-    }
-  }
-
-  button {
-    margin-top: 15px;
-    padding: 10px;
-    background: #f39c12;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
-
-    &:hover {
-      background: #e67e22;
-    }
-  }
-}
-
-.news-section-button{
-  background-color: #2980b9;
-  border-radius: 5px;
-}
-
-.news-section-button:hover{
-  color: white;
-  background: #3498db;
-}
-
-.content-wrapper {
-  margin: 0 auto;
-  max-width: 1200px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0.5rem;
-}
-
-
-
-
-/* Responsive */
-@media (max-width: 768px) {
-  .news-section .news-container {
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 
-  .news-section .news-item {
-    width: 90%;
-    margin-bottom: 10px;
+  .news-card {
+    flex: 1 1 30%;
+    min-width: 300px;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  /* 🔹 'View All News' Button */
+  .news-section-button {
+    margin-top: 20px;
+    padding: 12px 18px;
+    background: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    display: block;
+    margin: 20px auto;
+  }
+
+  .news-section-button:hover {
+    background: #3498db;
+  }
+}
+
+/* 🔹 Responsive Carousel for Mobile */
+@media (max-width: 768px) {
+  .news-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+    gap: 10px;
+  }
+
+  .news-card {
+    flex: 0 0 100%;
+    max-width: 90%;
+    scroll-snap-align: start;
   }
 }

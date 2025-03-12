@@ -80,6 +80,9 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .services-page .service-item{
+    width: 75%;
+  }
   .services-page .services-list {
     flex-direction: column;
     align-items: center;

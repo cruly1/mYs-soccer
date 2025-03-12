@@ -1,3 +1,4 @@
+/* 🔹 Main About Us Section */
 .about-us-section {
   padding: 30px;
   max-width: 1000px;
@@ -10,16 +11,16 @@
     margin-bottom: 20px;
     font-size: 28px;
     color: #fff;
-    text-align: center;
   }
 
-  /* 🔹 Flex container for image + text */
   .content-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    justify-content: space-between;
-  }
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0.5rem;
+}
 
   /* 🔹 Image section */
   .owners {
@@ -74,13 +75,14 @@
 
 /* 🔹 Mobile Responsive Design */
 @media (max-width: 768px) {
-  .content-wrapper {
+  .about-us-section .content-wrapper {
     flex-direction: column; // ✅ Stack items on small screens
     align-items: center;
     gap: 20px;
     max-height: 450px; // ✅ Limited height for mobile
     overflow-y: auto; // ✅ Enable scrolling on small screens
     position: relative;
+    padding-right: 10px;
   }
 
   /* 🔹 Move text under image for better scrolling experience */
@@ -95,9 +97,9 @@
     order: 1; // ✅ Image stays on top
   }
 
-  /* 🔹 Scroll indicator */
-  .content-wrapper::after {
-    
+  /* 🔹 Scroll Indicator */
+  .about-us-section .content-wrapper::after {
+  
     position: absolute;
     bottom: 10px;
     left: 50%;
@@ -120,4 +122,22 @@
   button {
     width: 100%; // ✅ Full width for better touch usability
   }
+}
+
+/* 🔹 Custom Scrollbar Styling */
+.about-us-section .content-wrapper::-webkit-scrollbar {
+  width: 8px; // ✅ Thin scrollbar
+}
+
+.about-us-section .content-wrapper::-webkit-scrollbar-track {
+  background: transparent; // ✅ Hides track for a clean look
+}
+
+.about-us-section .content-wrapper::-webkit-scrollbar-thumb {
+  background: #2980b9; // ✅ Scrollbar color matches theme
+  border-radius: 10px; // ✅ Rounded edges
+}
+
+.about-us-section .content-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #3498db; // ✅ Slight color change on hover
 }
