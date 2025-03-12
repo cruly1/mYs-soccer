@@ -79,14 +79,15 @@
 
 
 
-/* Responsive */
+/* 🔹 Responsive */
 @media (max-width: 768px) {
-  .content {
-    width: 95%;
+  .welcome-text {
+    font-size: 20px;
+    width: 60%;
+    top: 5%;
   }
 
-  .welcome-text {
-    width: 90%;
-    font-size: 20px;
+  .content {
+    width: 95%;
   }
 }

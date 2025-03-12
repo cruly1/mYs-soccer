@@ -69,7 +69,7 @@ const AboutUs = () => {
   
   {/* ✅ Grouping Buttons in a Flexbox */}
   <div className="button-group">
-    <button onClick={switchOwner}>Switch Owner</button>
+    <button className="home-btn" onClick={switchOwner}>Switch Owner</button>
     <button className="home-btn" onClick={() => navigate("/")}>Home</button>
   </div>
 </motion.div>

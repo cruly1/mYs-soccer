@@ -52,18 +52,52 @@ button.active::after {
   background: #3498db; // ✅ Underline color for active section
 }
 
-/* Responsive */
+/* 🔹 Mobile Menu */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+/* 🔹 Responsive Navbar */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
-    padding: 10px;
+  width: 95%;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+    justify-content: space-between;
+    padding: 10px 15px;
   }
 
-  .navbar button {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    text-align: center;
+    padding: 15px 0;
+    gap: 10px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  button {
     font-size: 16px;
     padding: 10px;
-    margin: 5px 0;
   }
 }

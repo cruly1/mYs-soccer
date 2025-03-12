@@ -1,55 +1,60 @@
 .about-us-section {
   padding: 30px;
-  max-width: 900px; // ✅ Increased width for better layout
+  max-width: 1000px;
   margin: 0 auto;
-  background: rgba(0, 0, 0, 0.6); // ✅ Slight background contrast
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
-  text-align: left; // ✅ Align text to the left for readability
+  text-align: center;
 
   h2 {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-size: 28px;
     color: #fff;
-    text-align: center; // ✅ Keep the title centered
+    text-align: center;
   }
 
+  /* 🔹 Flex container for image + text */
   .content-wrapper {
     display: flex;
     align-items: center;
-    gap: 30px; // ✅ Space between image and text
+    gap: 30px;
+    justify-content: space-between;
   }
 
+  /* 🔹 Image section */
   .owners {
-    flex: 1; // ✅ Allows the image section to take half of the space
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 
     img {
-      width: 100%; // ✅ Fill the container
-      max-width: 250px; // ✅ Adjust size
+      width: 100%;
+      max-width: 250px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
     }
   }
 
+  /* 🔹 Description text */
   .about-description {
-    flex: 2; // ✅ Takes more space than the image
+    flex: 2;
     font-size: 17px;
     line-height: 1.6;
     color: #ddd;
-    text-align: justify;
-    padding: 0 10px;
+    text-align: left;
+    padding: 0 15px;
   }
 
+  /* 🔹 Button styling */
   button {
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 12px 20px;
     background: #2980b9;
     color: white;
@@ -57,7 +62,9 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: 0.3s;
+    transition: background 0.3s;
+    display: block;
+    margin: 20px auto;
 
     &:hover {
       background: #3498db;
@@ -65,20 +72,52 @@
   }
 }
 
-/* Responsive */
+/* 🔹 Mobile Responsive Design */
 @media (max-width: 768px) {
   .content-wrapper {
-    flex-direction: column; // ✅ Stack elements on mobile
-    text-align: center; // ✅ Center everything for small screens
+    flex-direction: column; // ✅ Stack items on small screens
+    align-items: center;
+    gap: 20px;
+    max-height: 450px; // ✅ Limited height for mobile
+    overflow-y: auto; // ✅ Enable scrolling on small screens
+    position: relative;
+  }
+
+  /* 🔹 Move text under image for better scrolling experience */
+  .about-description {
+    font-size: 15px;
+    text-align: justify;
+    max-height: 250px;
+    order: 2; // ✅ Ensures text comes AFTER the image
   }
 
   .owners {
-    img {
-      max-width: 180px; // ✅ Adjust image size on mobile
+    order: 1; // ✅ Image stays on top
+  }
+
+  /* 🔹 Scroll indicator */
+  .content-wrapper::after {
+    
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #ddd;
+    opacity: 0.7;
+    animation: fadeInOut 1.5s infinite alternate;
+  }
+
+  @keyframes fadeInOut {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 0.3;
     }
   }
 
-  .about-description {
-    font-size: 14px;
+  button {
+    width: 100%; // ✅ Full width for better touch usability
   }
 }
