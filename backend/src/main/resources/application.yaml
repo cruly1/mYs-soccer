@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: manageyself-soccer
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./DB
+    username: admin
+    password: admin
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+server:
+  tomcat:
+    max-swallow-size: 100MB
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+
+      userEndpoints:
+        - /api/auth/authenticate
+        - /api/expertise/getExpertiseByTitle
+        - /api/expertise/getAllExpertise
+        - /api/images/
+        - /api/news/getNewsByTitle
+        - /api/news/getAllNews
+        - /api/news/getFirstFourNews
+        - /api/players/getPlayerByName
+        - /api/players/getAllPlayers
+        - /api/players/getFirstFourPlayers
+      adminEndpoints:
+        - /api/**
