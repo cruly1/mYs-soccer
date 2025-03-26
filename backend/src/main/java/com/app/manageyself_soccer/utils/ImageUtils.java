@@ -55,9 +55,9 @@ public class ImageUtils {
         }
     }
 
-    public Image buildImage(MultipartFile file) throws IOException {
+    public Image buildImage(MultipartFile file, String model) throws IOException {
         return imageRepository.save(Image.builder()
-                .name(file.getOriginalFilename())
+                .name(model)
                 .type(file.getContentType())
                 .imageData(compressImage(file.getBytes())).build());
     }

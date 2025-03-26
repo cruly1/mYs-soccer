@@ -36,9 +36,9 @@ public class ImageService {
         Player player = playerRepository.findByName(nickName)
                 .orElseThrow(() -> new PlayerNotFoundException("Player not found."));
 
-        Image image = imageUtils.buildImage(file);
+        Image image = imageUtils.buildImage(file, nickName);
 
-        player.setImageName(image.getName());
+        player.setImageName(nickName);
         player.setImageType(image.getType());
         playerRepository.save(player);
 
@@ -50,9 +50,9 @@ public class ImageService {
         News news = newsRepository.findByTitle(title)
                 .orElseThrow(() -> new NewsNotFoundException("News not found."));
 
-        Image image = imageUtils.buildImage(file);
+        Image image = imageUtils.buildImage(file, title);
 
-        news.setImageName(image.getName());
+        news.setImageName(title);
         news.setImageType(image.getType());
         newsRepository.save(news);
 
