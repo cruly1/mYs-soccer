@@ -21,11 +21,15 @@ const NewsSection = () => {
       <h2>Latest News</h2>
       <div className="reference-container">
       {/* 🔹 Carousel Integration */}
-      <Carousel>
-        {news.map((newsItem, index) => (
-          <NewsCard key={index} {...newsItem} />
-        ))}
-      </Carousel>
+       {news.length > 0 ? (
+          <Carousel>
+            {news.map((newsItem, index) => (
+              <NewsCard key={index} {...newsItem} />
+            ))}
+          </Carousel>
+        ) : (
+          <p>No news available at the moment.</p>
+        )}
       </div>
     </div>
   );
