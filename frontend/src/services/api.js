@@ -349,6 +349,33 @@ export const uploadImageForNews = async (newsTitle, imageFile) => {
   }
 };
 
+export const uploadImageForTrainer = async (trainerName, imageFile) => {
+  try {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    const response = await axios.post(
+      `${API_BASE_URL}/images/uploadImageForTrainer?trainer=${trainerName}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    
+    // Assuming backend returns the updated player with imageName and imageType
+    const updatedTrainer = response.data;
+    toast.success('Trainer image uploaded successfully!');
+    return updatedTrainer;
+  } catch (error) {
+    console.error('Error uploading trainer image:', error.response?.data || error.message);
+    toast.error('Failed to upload trainer image.');
+    throw error;
+  }
+};
+
 export const downloadImage = async (fileName) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/images/downloadImage`, {

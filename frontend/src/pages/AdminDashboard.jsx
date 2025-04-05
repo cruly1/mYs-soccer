@@ -19,6 +19,7 @@ import {
   createStudies,
   uploadImageForNews,
   uploadImageForPlayer,
+  uploadImageForTrainer,
   downloadImage,
 } from "../services/api"; // We'll create these API functions next
 import "./AdminDashboard.scss";
@@ -48,11 +49,12 @@ const [playerImage, setPlayerImage] = useState(null); // For player image upload
 const [newsImage, setNewsImage] = useState(null); // For news image upload
 const [playerImages, setPlayerImages] = useState({});
 const [newsImages, setNewsImages] = useState({});
- const [selectedEntityType, setSelectedEntityType] = useState('player'); // 'player' or 'news'
-  const [selectedEntityId, setSelectedEntityId] = useState('');
-  const [entityImage, setEntityImage] = useState(null);
-  const [availablePlayers, setAvailablePlayers] = useState([]);
-  const [availableNews, setAvailableNews] = useState([]);
+const [selectedEntityType, setSelectedEntityType] = useState('player'); // 'player' or 'news'
+const [selectedEntityId, setSelectedEntityId] = useState('');
+const [entityImage, setEntityImage] = useState(null);
+const [availablePlayers, setAvailablePlayers] = useState([]);
+const [availableNews, setAvailableNews] = useState([]);
+const [availableTrainers, setAvailableTrainers] = useState([]);
 
   
 
@@ -61,7 +63,7 @@ const [newsImages, setNewsImages] = useState({});
     try {
       // First create the player
       const createdPlayer = await addPlayer(player);
-      toast.success('Player created successfully!');
+      
 
       // Then upload image if provided
       if (playerImage) {
@@ -130,14 +132,27 @@ const [newsImages, setNewsImages] = useState({});
     }
   };
   const filterEntitiesWithoutImages = (entities, entityType) => {
-  return entities.filter(entity => !entity.imageName);
+  return entities.filter(entity => {
+    if (entityType === 'trainer') {
+      return !entity.imageName && entity.name; // Check for trainer specific properties
+    }
+    return !entity.imageName;
+  });
 };
 
 useEffect(() => {
-  // Update available players and news whenever the main lists change
   setAvailablePlayers(filterEntitiesWithoutImages(players, 'player'));
   setAvailableNews(filterEntitiesWithoutImages(somethingNews, 'news'));
-}, [players, somethingNews]);
+  
+  // Get all trainers from expertiseList
+  const allTrainers = expertiseList.flatMap(exp => 
+    exp.trainers.map(trainer => ({ 
+      ...trainer, 
+      expertiseTitle: exp.title 
+    }))
+  );
+  setAvailableTrainers(filterEntitiesWithoutImages(allTrainers, 'trainer'));
+}, [players, somethingNews, expertiseList]);
 
 const handleEntityImageChange = (e) => {
   if (e.target.files && e.target.files[0]) {
@@ -159,16 +174,37 @@ const handleImageUpload = async () => {
         setPlayers(prev => prev.map(p => 
           p.name === player.name ? updatedPlayer : p
         ));
-        toast.success('Player image uploaded successfully!');
+        
       }
-    } else {
+    } else if (selectedEntityType === 'news') {
       const newsItem = somethingNews.find(n => n.title === selectedEntityId);
       if (newsItem) {
         const updatedNews = await uploadImageForNews(newsItem.title, entityImage);
         setSomethingNews(prev => prev.map(n => 
           n.title === newsItem.title ? updatedNews : n
         ));
-        toast.success('News image uploaded successfully!');
+        
+      }
+    }
+    else if (selectedEntityType === 'trainer') {
+      const trainer = availableTrainers.find(t => t.name === selectedEntityId);
+      if (trainer) {
+        const updatedTrainer = await uploadImageForTrainer(trainer.name, entityImage);
+        
+        // Update the trainer in the expertiseList
+        setExpertiseList(prev => prev.map(exp => {
+          if (exp.title === trainer.expertiseTitle) {
+            return {
+              ...exp,
+              trainers: exp.trainers.map(t => 
+                t.name === trainer.name ? updatedTrainer : t
+              )
+            };
+          }
+          return exp;
+        }));
+        
+        toast.success('Trainer image uploaded successfully!');
       }
     }
 
@@ -480,37 +516,55 @@ useEffect(() => {
         >
           <option value="player">Player</option>
           <option value="news">News</option>
+          <option value="trainer">Trainer</option>
         </select>
       </div>
       
       <div className="form-row">
         <label>
-          {selectedEntityType === 'player' ? 'Select Player' : 'Select News'}:
+          {selectedEntityType === 'player' ? 'Select Player' : 
+       selectedEntityType === 'news' ? 'Select News' : 'Select Trainer'}:
         </label>
         <select
           value={selectedEntityId}
           onChange={(e) => setSelectedEntityId(e.target.value)}
-          disabled={selectedEntityType === 'player' ? availablePlayers.length === 0 : availableNews.length === 0}
-        >
-          <option value="">Select {selectedEntityType === 'player' ? 'Player' : 'News'}</option>
-          {selectedEntityType === 'player' 
-            ? availablePlayers.map(player => (
-                <option key={player.name} value={player.name}>
-                  {player.name}
-                </option>
-              ))
-            : availableNews.map(newsItem => (
-                <option key={newsItem.title} value={newsItem.title}>
-                  {newsItem.title}
-                </option>
-              ))
-          }
-        </select>
+          disabled={
+        (selectedEntityType === 'player' && availablePlayers.length === 0) ||
+        (selectedEntityType === 'news' && availableNews.length === 0) ||
+        (selectedEntityType === 'trainer' && availableTrainers.length === 0)
+      }
+    >
+          <option value="">Select {selectedEntityType}</option>
+      {selectedEntityType === 'player' 
+        ? availablePlayers.map(player => (
+            <option key={player.name} value={player.name}>
+              {player.name}
+            </option>
+          ))
+        : selectedEntityType === 'news'
+          ? availableNews.map(newsItem => (
+              <option key={newsItem.title} value={newsItem.title}>
+                {newsItem.title}
+              </option>
+            ))
+          : availableTrainers.map(trainer => (
+              <option 
+                key={`${trainer.expertiseTitle}-${trainer.name}`} 
+                value={trainer.name}
+              >
+                {trainer.name} ({trainer.expertiseTitle})
+              </option>
+            ))
+      }
+    </select>
         {(selectedEntityType === 'player' && availablePlayers.length === 0) && (
           <p className="info-text">All players already have images</p>
         )}
         {(selectedEntityType === 'news' && availableNews.length === 0) && (
           <p className="info-text">All news items already have images</p>
+        )}
+        {selectedEntityType === 'trainer' && availableTrainers.length === 0 && (
+          <p className="info-text">All trainers already have images</p>
         )}
       </div>
       

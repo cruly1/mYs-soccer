@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getExpertiseByTitle } from "../services/api";
+import { getExpertiseByTitle, downloadImage } from "../services/api";
 import "./ServicePage.scss";
 
 const ServicePage = () => {
+  const API_BASE_URL = "http://localhost:8080/api";
   const { title } = useParams();
   const navigate = useNavigate();
   const [service, setService] = useState(null);
   const [error, setError] = useState(false);
+  const [trainerImages, setTrainerImages] = useState({});
 
   useEffect(() => {
     const fetchService = async () => {
@@ -15,13 +17,33 @@ const ServicePage = () => {
         const apiService = await getExpertiseByTitle(title);
         if (apiService) {
           setService(apiService);
-          console.log("Service fetched:", apiService);
+          
+          // Preload trainer images
+          if (apiService.trainers && apiService.trainers.length > 0) {
+            const imagePromises = apiService.trainers.map(trainer => {
+              if (trainer.imageName) {
+                return downloadImage(trainer.imageName)
+                  .then(url => ({ name: trainer.name, url }))
+                  .catch(() => null);
+              }
+              return Promise.resolve(null);
+            });
+
+            Promise.all(imagePromises).then(results => {
+              const loadedImages = {};
+              results.forEach(result => {
+                if (result) {
+                  loadedImages[result.name] = result.url;
+                }
+              });
+              setTrainerImages(loadedImages);
+            });
+          }
         } else {
           setError(true);
         }
       } catch (error) {
         console.error("Error fetching service:", error);
-        
         setError(true);
       }
     };
@@ -59,30 +81,50 @@ const ServicePage = () => {
       </div>
 
       {/* Topics Section */}
-        {service.study && service.study.length > 0 && (
+      {service.study && service.study.length > 0 && (
         <div className="topics-section">
-            <h2>What You'll Learn</h2>
-            <ul>
-            {Array.isArray(service.study) // Ensure it's an array
-                ? service.study.map((topic, index) => <li key={index}>{topic}</li>)
-                : service.study.split(",").map((topic, index) => <li key={index}>{topic.trim()}</li>)}
-            </ul>
+          <h2>What You'll Learn</h2>
+          <ul>
+            {Array.isArray(service.study)
+              ? service.study.map((topic, index) => <li key={index}>{topic}</li>)
+              : service.study.split(",").map((topic, index) => <li key={index}>{topic.trim()}</li>)}
+          </ul>
         </div>
-        )}
-
+      )}
 
       {/* Trainers Section */}
       {service.trainers && service.trainers.length > 0 && (
         <div className="trainers-section">
           <h2>Meet Our Experts</h2>
           <div className="trainers-container">
-            {service.trainers.map((trainer, index) => (
-              <div key={index} className="trainer-card">
-                <img src={trainer.image || `${process.env.PUBLIC_URL}/default-trainer.jpg`} alt={trainer.name} />
-                <h3>{trainer.name}</h3>
-                <p>{trainer.briefContent}</p>
-              </div>
-            ))}
+            {service.trainers.map((trainer, index) => {
+              const imageUrl = trainer.imageName 
+                ? trainerImages[trainer.name] || `${API_BASE_URL}/images/downloadImage?fileName=${trainer.imageName}`
+                : "/default-trainer.jpg";
+
+              return (
+                <div key={index} className="trainer-card">
+                  <div className="trainer-image-container">
+                    <img
+                      loading="lazy"
+                      src={imageUrl}
+                      alt={trainer.name}
+                      className="trainer-image"
+                      width={200}
+                      height={200}
+                      onError={(e) => {
+                        e.target.src = "/default-trainer.jpg";
+                        e.target.onerror = null;
+                      }}
+                    />
+                  </div>
+                  <div className="trainer-info">
+                    <h3>{trainer.name}</h3>
+                    <p>{trainer.briefContent}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
