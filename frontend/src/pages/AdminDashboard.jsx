@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify';
 import {
   getAllPlayers,
   deletePlayer,
@@ -15,11 +16,15 @@ import {
   deleteExpertise,
   createTrainer,
   deleteTrainer,
-  createStudies
+  createStudies,
+  uploadImageForNews,
+  uploadImageForPlayer,
+  downloadImage,
 } from "../services/api"; // We'll create these API functions next
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
+  const API_BASE_URL = "http://localhost:8080/api";
   const navigate = useNavigate();
   const [player, setPlayer] = useState({ name: "", dateOfBirth: "", position: "CSATAR" });
   const [news, setNews] = useState({ title: "", postDate: "", briefContent: "", content: "" });
@@ -39,41 +44,196 @@ const AdminDashboard = () => {
   studies: [],
 });
 const [studyInput, setStudyInput] = useState(""); // For individual study inputs
-
+const [playerImage, setPlayerImage] = useState(null); // For player image upload
+const [newsImage, setNewsImage] = useState(null); // For news image upload
+const [playerImages, setPlayerImages] = useState({});
+const [newsImages, setNewsImages] = useState({});
+ const [selectedEntityType, setSelectedEntityType] = useState('player'); // 'player' or 'news'
+  const [selectedEntityId, setSelectedEntityId] = useState('');
+  const [entityImage, setEntityImage] = useState(null);
+  const [availablePlayers, setAvailablePlayers] = useState([]);
+  const [availableNews, setAvailableNews] = useState([]);
 
   
 
   // Handle adding a player
-  const handleAddPlayer = async () => {
-    await addPlayer(player);
-    alert("Player added successfully!");
+   const handleAddPlayer = async () => {
+    try {
+      // First create the player
+      const createdPlayer = await addPlayer(player);
+      toast.success('Player created successfully!');
+
+      // Then upload image if provided
+      if (playerImage) {
+        try {
+          const updatedPlayer = await uploadImageForPlayer(createdPlayer.name, playerImage);
+          
+          // Update local state with the image info
+          setPlayers(prev => prev.map(p => 
+            p.name === createdPlayer.name ? updatedPlayer : p
+          ));
+        } catch (uploadError) {
+          toast.warning('Player created but image upload failed');
+        }
+      }
+
+      // Reset form
+      setPlayer({ name: "", dateOfBirth: "", position: "CSATAR" });
+      setPlayerImage(null);
+    } catch (error) {
+      toast.error('Failed to create player');
+      console.error('Error adding player:', error);
+    }
   };
 
   // Handle adding news
   const handleAddNews = async () => {
-    await addNews(news);
-    alert("News added successfully!");
+    try {
+      // First create the news
+      const createdNews = await addNews(news);
+      toast.success('News created successfully!');
+
+      // Then upload image if provided
+      if (newsImage) {
+        try {
+          const updatedNews = await uploadImageForNews(createdNews.title, newsImage);
+          
+          // Update local state with the image info
+          setSomethingNews(prev => prev.map(n => 
+            n.title === createdNews.title ? updatedNews : n
+          ));
+        } catch (uploadError) {
+          toast.warning('News created but image upload failed');
+        }
+      }
+
+      // Reset form
+      setNews({ title: "", postDate: "", briefContent: "", content: "" });
+      setNewsImage(null);
+    } catch (error) {
+      toast.error('Failed to create news');
+      console.error('Error adding news:', error);
+    }
   };
 
-  
+// Handle player image change
+  const handlePlayerImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setPlayerImage(e.target.files[0]);
+    }
+  };
+
+  // Handle news image change
+  const handleNewsImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setNewsImage(e.target.files[0]);
+    }
+  };
+  const filterEntitiesWithoutImages = (entities, entityType) => {
+  return entities.filter(entity => !entity.imageName);
+};
+
+useEffect(() => {
+  // Update available players and news whenever the main lists change
+  setAvailablePlayers(filterEntitiesWithoutImages(players, 'player'));
+  setAvailableNews(filterEntitiesWithoutImages(somethingNews, 'news'));
+}, [players, somethingNews]);
+
+const handleEntityImageChange = (e) => {
+  if (e.target.files && e.target.files[0]) {
+    setEntityImage(e.target.files[0]);
+  }
+};
+
+const handleImageUpload = async () => {
+  if (!selectedEntityId || !entityImage) {
+    toast.error('Please select an entity and an image');
+    return;
+  }
+
+  try {
+    if (selectedEntityType === 'player') {
+      const player = players.find(p => p.name === selectedEntityId);
+      if (player) {
+        const updatedPlayer = await uploadImageForPlayer(player.name, entityImage);
+        setPlayers(prev => prev.map(p => 
+          p.name === player.name ? updatedPlayer : p
+        ));
+        toast.success('Player image uploaded successfully!');
+      }
+    } else {
+      const newsItem = somethingNews.find(n => n.title === selectedEntityId);
+      if (newsItem) {
+        const updatedNews = await uploadImageForNews(newsItem.title, entityImage);
+        setSomethingNews(prev => prev.map(n => 
+          n.title === newsItem.title ? updatedNews : n
+        ));
+        toast.success('News image uploaded successfully!');
+      }
+    }
+
+    // Reset form
+    setEntityImage(null);
+    setSelectedEntityId('');
+  } catch (error) {
+    toast.error('Failed to upload image');
+    console.error('Error uploading image:', error);
+  }
+};
+
+  const fetchImage = async (fileName, setImageState) => {
+    if (!fileName) return;
+    try {
+      const imageUrl = await downloadImage(fileName);
+      if (imageUrl) {
+        setImageState(prev => ({ ...prev, [fileName]: imageUrl }));
+      }
+    } catch (error) {
+      console.error('Error fetching image:', error);
+    }
+  };
 
   const fetchPlayers = async () => {
     const data = await getAllPlayers();
     setPlayers(data);
+    
+    // Fetch images for players
+    data.forEach(player => {
+      if (player.imageFileName) {
+        fetchImage(player.imageFileName, setPlayerImages);
+      }
+    });
   };
 
-  const fetchNews = async () => {
+
+   const fetchNews = async () => {
     const data = await getAllNews();
     setSomethingNews(data);
+    
+    // Fetch images for news
+    data.forEach(newsItem => {
+      if (newsItem.imageFileName) {
+        fetchImage(newsItem.imageFileName, setNewsImages);
+      }
+    });
   };
+
+useEffect(() => {
+    return () => {
+      Object.values(playerImages).forEach(URL.revokeObjectURL);
+      Object.values(newsImages).forEach(URL.revokeObjectURL);
+    };
+  }, [playerImages, newsImages]);
 
   const handleDeletePlayer = async (name) => {
     await deletePlayer(name);
+    
     fetchPlayers(); // Refresh the list
   };
 
   const handleDeleteNews = async (title) => {
     await deleteNews(title);
+    
     fetchNews(); // Refresh the list
   };
 
@@ -87,7 +247,7 @@ const [studyInput, setStudyInput] = useState(""); // For individual study inputs
       setEditingPlayer(null);
       fetchPlayers(); // ✅ Refresh only after saving, not while typing
     } catch (error) {
-      alert("Error updating player. Please try again.");
+      toast.error("Error updating player. Please try again.");
     }
   }
 };
@@ -97,9 +257,11 @@ const handleUpdateNews = async () => {
     try {
       await updateNews(editingNews.originalTitle, editingNews); // ✅ Send original title
       setEditingNews(null);
+      
       fetchNews(); // ✅ Refresh only after saving, not while typing
     } catch (error) {
-      alert("Error updating news. Please try again.");
+      
+      
     }
   }
 };
@@ -121,6 +283,7 @@ const handleEditNews = (newsItem) => {
 
   const handleAddExpertise = async () => {
     await createExpertise(expertise);
+    
     fetchExpertise();
   };
 
@@ -134,11 +297,12 @@ const handleEditNews = (newsItem) => {
       });
 
       setEditingExpertise(null);
+      
       fetchExpertise();
       
     } catch (error) {
       console.error("Error updating expertise:", error);
-      alert("Failed to update expertise. Please check your input.");
+      
     }
   }
 };
@@ -147,6 +311,7 @@ const handleEditNews = (newsItem) => {
 
   const handleDeleteExpertise = async (title) => {
     await deleteExpertise(title);
+    
     fetchExpertise();
   };
 
@@ -156,11 +321,13 @@ const handleEditNews = (newsItem) => {
       return;
     }
     await createTrainer(selectedExpertise, trainer);
+    
     fetchExpertise();
   };
 
   const handleDeleteTrainer = async (title, name) => {
     await deleteTrainer(title, name);
+    
     fetchExpertise();
   };
 
@@ -189,14 +356,11 @@ const handleAddService = async () => {
     if (createdService && newService.studies.length > 0) {
       await createStudies(newService.title, newService.studies);
     }
-
-    alert("Service added successfully!");
+    
     fetchExpertise(); // Refresh the list
     setNewService({ title: "", briefContent: "", content: "", studies: [] }); // Reset form
     setStudyInput(""); // Reset study input
   } catch (error) {
-    console.error("Error adding service:", error);
-    alert("Failed to add service. Please check your input.");
   }
 };
 
@@ -206,7 +370,7 @@ useEffect(() => {
     fetchExpertise();
   }, []);
   // Check if user is authenticated
-  if (!localStorage.getItem("isAuthenticated")) {
+  if (!sessionStorage.getItem("token")) {
     navigate("/"); // Redirect if not logged in
     return null;
   }
@@ -224,6 +388,7 @@ useEffect(() => {
           <option value="KAPUS">KAPUS</option>
           <option value="VEDO">VEDO</option>
         </select>
+        
         <button onClick={handleAddPlayer}>Add Player</button>
       </div>
 
@@ -233,6 +398,7 @@ useEffect(() => {
         <input type="date" onChange={(e) => setNews({ ...news, postDate: e.target.value })} />
         <textarea placeholder="Brief Content" onChange={(e) => setNews({ ...news, briefContent: e.target.value })}></textarea>
         <textarea placeholder="Full Content" onChange={(e) => setNews({ ...news, content: e.target.value })}></textarea>
+        
         <button onClick={handleAddNews}>Add News</button>
       </div>
 
@@ -300,6 +466,75 @@ useEffect(() => {
         <button onClick={handleAddTrainer}>Add Trainer</button>
       </div>
 
+          <div className="form-section">
+      <h3>Upload Image for Existing Entity</h3>
+      
+      <div className="form-row">
+        <label>Entity Type:</label>
+        <select 
+          value={selectedEntityType}
+          onChange={(e) => {
+            setSelectedEntityType(e.target.value);
+            setSelectedEntityId('');
+          }}
+        >
+          <option value="player">Player</option>
+          <option value="news">News</option>
+        </select>
+      </div>
+      
+      <div className="form-row">
+        <label>
+          {selectedEntityType === 'player' ? 'Select Player' : 'Select News'}:
+        </label>
+        <select
+          value={selectedEntityId}
+          onChange={(e) => setSelectedEntityId(e.target.value)}
+          disabled={selectedEntityType === 'player' ? availablePlayers.length === 0 : availableNews.length === 0}
+        >
+          <option value="">Select {selectedEntityType === 'player' ? 'Player' : 'News'}</option>
+          {selectedEntityType === 'player' 
+            ? availablePlayers.map(player => (
+                <option key={player.name} value={player.name}>
+                  {player.name}
+                </option>
+              ))
+            : availableNews.map(newsItem => (
+                <option key={newsItem.title} value={newsItem.title}>
+                  {newsItem.title}
+                </option>
+              ))
+          }
+        </select>
+        {(selectedEntityType === 'player' && availablePlayers.length === 0) && (
+          <p className="info-text">All players already have images</p>
+        )}
+        {(selectedEntityType === 'news' && availableNews.length === 0) && (
+          <p className="info-text">All news items already have images</p>
+        )}
+      </div>
+      
+      <div className="form-row">
+        <label>Image:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleEntityImageChange}
+        />
+        {entityImage && (
+          <span className="file-name">{entityImage.name}</span>
+        )}
+      </div>
+      
+      <button 
+        onClick={handleImageUpload}
+        disabled={!selectedEntityId || !entityImage}
+      >
+        Upload Image
+      </button>
+  </div>
+
+
       {/* Players Management */}
     <div className="management-section">
     <h3>Manage Players</h3>
@@ -330,7 +565,19 @@ useEffect(() => {
             </>
         ) : (
             <>
+            <div className="player-info">
+                  {player.imageName && (
+                  <img 
+                    src={`${API_BASE_URL}/images/downloadImage?fileName=${player.imageName}`}
+                    alt={player.name}
+                    className="player-thumbnail"
+                    onError={(e) => {
+                      e.target.style.display = 'none'; // Hide if image fails to load
+                    }}
+                  />
+                )}
             <span>{player.name} - {player.position} - {player.dateOfBirth}</span>
+            </div>
             <button onClick={() => handleEditPlayer(player)}>Edit</button>
             <button className="delete-btn" onClick={() => handleDeletePlayer(player.name)}>Delete</button>
             </>
@@ -371,7 +618,19 @@ useEffect(() => {
             </>
           ) : (
             <>
+            <div className="news-info">
+                  {newsItem.imageName && (
+                  <img 
+                    src={`${API_BASE_URL}/images/downloadImage?fileName=${newsItem.imageName}`}
+                    alt={newsItem.title}
+                    className="news-thumbnail"
+                    onError={(e) => {
+                      e.target.style.display = 'none'; // Hide if image fails to load
+                    }}
+                  />
+                )}
               <span>{newsItem.title} - {newsItem.postDate}</span>
+              </div>
               <button onClick={() => handleEditNews(newsItem)}>Edit</button>
               <button className="delete-btn" onClick={() => handleDeleteNews(newsItem.title)}>Delete</button>
             </>
@@ -444,7 +703,7 @@ useEffect(() => {
       ))}
 
 
-      <button className="logout-btn" onClick={() => { localStorage.removeItem("isAuthenticated"); navigate("/"); }}>
+      <button className="logout-btn" onClick={() => { sessionStorage.removeItem("token"); navigate("/"); }}>
         Home
       </button>
     </div>

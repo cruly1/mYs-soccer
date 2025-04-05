@@ -15,6 +15,7 @@ const PlayersSection = () => {
     const fetchPlayers = async () => {
       const data = await getFirstFourPlayers();
       setPlayers(data);
+      console.log("Fetched players:", data);
     };
 
     fetchPlayers();

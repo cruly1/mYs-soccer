@@ -33,7 +33,7 @@ application:
         - /api/auth/authenticate
         - /api/expertise/getExpertiseByTitle
         - /api/expertise/getAllExpertise
-        - /api/images/
+        - /api/images/downloadImage
         - /api/news/getNewsByTitle
         - /api/news/getAllNews
         - /api/news/getFirstFourNews

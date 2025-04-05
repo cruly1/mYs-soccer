@@ -85,3 +85,94 @@
     cursor: pointer;
   }
 }
+
+.image-upload {
+  margin: 10px 0;
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .file-name {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #666;
+  }
+}
+
+.player-thumbnail, .news-thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+}
+
+.player-info, .news-info {
+  display: flex;
+  align-items: center;
+}
+
+.player-thumbnail, .news-thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.player-info, .news-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  
+  .item-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+.form-row {
+  margin-bottom: 15px;
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  select, input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+}
+
+.file-name {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.info-text {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 5px;
+  font-style: italic;
+}

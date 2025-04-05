@@ -1,22 +1,41 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./LoginPage.scss";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleLogin = (e) => {
+  
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
-    // Hardcoded credentials (Replace with API call if needed)
-    if (username === "admin" && password === "admin") {
-      localStorage.setItem("isAuthenticated", "true"); // Store login state
+    try {
+      // Replace with your Spring Boot endpoint
+      const response = await axios.post("http://localhost:8080/api/auth/authenticate", {
+        username,
+        password
+      });
+
+      // Assuming your backend returns { token: "jwt.token.here" }
+      const token = response.data.token;
+      
+      // Store the token in localStorage
+      sessionStorage.setItem("token", token);
+      console.log("Token stored in sessionStorage:", token);
+      // Set default Authorization header for future requests
+      //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
       navigate("/admin"); // Redirect to admin panel
-    } else {
-      setError("Invalid username or password");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -38,7 +57,9 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
         {error && <p className="error">{error}</p>}
       </form>
     </div>
