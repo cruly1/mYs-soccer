@@ -3,11 +3,14 @@ package com.app.manageyself_soccer.service;
 import com.app.manageyself_soccer.dao.ImageRepository;
 import com.app.manageyself_soccer.dao.NewsRepository;
 import com.app.manageyself_soccer.dao.PlayerRepository;
+import com.app.manageyself_soccer.dao.TrainerRepository;
 import com.app.manageyself_soccer.exception.customexceptions.NewsNotFoundException;
 import com.app.manageyself_soccer.exception.customexceptions.PlayerNotFoundException;
+import com.app.manageyself_soccer.exception.customexceptions.TrainerNotFoundException;
 import com.app.manageyself_soccer.model.Image;
 import com.app.manageyself_soccer.model.News;
 import com.app.manageyself_soccer.model.Player;
+import com.app.manageyself_soccer.model.Trainer;
 import com.app.manageyself_soccer.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,7 @@ public class ImageService {
     private final NewsRepository newsRepository;
     private final ImageRepository imageRepository;
     private final ImageUtils imageUtils;
+    private final TrainerRepository trainerRepository;
 
     public byte[] downloadImage(String fileName) {
         Optional<Image> dbImageData = imageRepository.findByName(fileName);
@@ -55,6 +59,20 @@ public class ImageService {
         news.setImageName(title);
         news.setImageType(image.getType());
         newsRepository.save(news);
+
+        return "File uploaded successfully: " + file.getOriginalFilename();
+    }
+
+    @Transactional
+    public String uploadImageForTrainer(MultipartFile file, String trainerName) throws IOException {
+        Trainer trainer = trainerRepository.findByName(trainerName)
+                .orElseThrow(() -> new TrainerNotFoundException("Trainer not found."));
+
+        Image image = imageUtils.buildImage(file, trainerName);
+
+        trainer.setImageName(trainerName);
+        trainer.setImageType(image.getType());
+        trainerRepository.save(trainer);
 
         return "File uploaded successfully: " + file.getOriginalFilename();
     }
