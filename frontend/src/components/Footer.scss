@@ -1,12 +1,71 @@
 .footer {
   width: 100%;
-  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
   color: white;
   text-align: center;
   padding: 10px 0;
   position: relative;
   bottom: 0;
   font-size: 15px;
+   .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .copyright {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-align: center;
+  }
+
+  .social-media {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    .follow-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      .instagram-icon {
+        font-size: 1.2rem;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {

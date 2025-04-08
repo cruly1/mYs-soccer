@@ -68,8 +68,8 @@ const ServicePage = () => {
       {/* Navigation Buttons */}
       <div className="background-image"></div>
       <div className="service-nav">
-        <button onClick={() => navigate("/")}>🏠 Home</button>
-        <button onClick={() => navigate("/services")}>📜 Back to Services</button>
+        <button onClick={() => navigate("/")}>Home</button>
+        <button onClick={() => navigate("/services")}>Back to Services</button>
       </div>
 
       {/* Service Title */}

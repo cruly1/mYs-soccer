@@ -17,8 +17,8 @@
   transition: background-color 0.5s ease-in-out;
 
   img {
-    width: 250px;
-    height: 350px;
+    width: 70%;
+    height: auto;
     border-radius: 20px;
     border: 5px solid white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -31,23 +31,31 @@
   color: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 40px;
   height: 100%;
   position: relative; // ✅ Ensures proper alignment
+  
 
   h2 {
+
     font-size: 28px;
     margin-bottom: 15px;
     color: #222;
   }
 
   p {
-    font-size: 16px;
-    line-height: 1.6;
-    text-align: center;
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: justify;
     max-width: 400px;
+  }
+  .text-content{
+    overflow-y: auto;
+    max-height: 60vh;
+    justify-content: center;
+    position: relative;
+    margin-top: 15vh;
   }
 
   .button-group { 
@@ -72,7 +80,10 @@
     }
   }
 }
-
+.text-section p {
+  font-size: clamp(14px, 2vw, 16px); /* Responsive font sizing */
+  line-height: 1.6;
+}
 
 /* Positioning Control */
 .owner-section.left {
@@ -81,6 +92,7 @@
 
 .text-section.right {
   order: 2; /* Text on Right */
+  margin-right: 10%;
 }
 
 .owner-section.right {
@@ -89,7 +101,10 @@
 
 .text-section.left {
   order: 1; /* Text on Left */
+  margin-left: 10%;
 }
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -103,9 +118,15 @@
     height: 50vh;
   }
 
+  
   .text-section {
-    width: 100%;
-    height: 50vh;
-    text-align: center;
+    padding: 20px 15px;
+    height: auto;
+    max-height: 50vh;
+    
+    p {
+      font-size: 14px;
+    }
   }
+
 }
