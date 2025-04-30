@@ -100,10 +100,34 @@ const AboutUs = () => {
   const [fadeIn, setFadeIn] = useState(false);
   const textSectionRef = useRef(null);
   const [isLandscape, setIsLandscape] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const overlayRef = useRef(null);
 
+  // Check if device is mobile
   useEffect(() => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const checkDevice = () => {
+      const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+      
+      // Also check screen dimensions as an additional mobile indicator
+      const smallScreen = window.innerWidth < 768 || 
+                         (window.innerWidth < 1024 && window.innerHeight < 500);
+      
+      if (mobile || smallScreen) {
+        setIsMobile(true);
+      }
+    };
+    
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    
+    return () => {
+      window.removeEventListener('resize', checkDevice);
+    };
+  }, []);
+
+  // Handle landscape overlay for mobile devices
+  useEffect(() => {
     if (!isMobile) return;
 
     const createOverlay = () => {
@@ -115,7 +139,7 @@ const AboutUs = () => {
         left: '0',
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#000',
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
         zIndex: '9999',
         display: 'flex',
         flexDirection: 'column',
@@ -161,21 +185,47 @@ const AboutUs = () => {
       phoneContainer.appendChild(phone);
       
       const message = document.createElement('h2');
-      message.textContent = 'Please rotate your device to landscape mode';
+      message.textContent = 'Please rotate your device';
       message.style.marginBottom = '20px';
       message.style.fontSize = '1.5rem';
       message.style.maxWidth = '80%';
+      
+      const continueButton = document.createElement('button');
+      continueButton.textContent = 'Continue Anyway';
+      Object.assign(continueButton.style, {
+        padding: '12px 20px',
+        backgroundColor: '#f39c12',
+        color: 'white',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        marginTop: '30px'
+      });
+      
+      continueButton.addEventListener('click', () => {
+        if (overlayRef.current && document.body.contains(overlayRef.current)) {
+          document.body.removeChild(overlayRef.current);
+        }
+      });
 
       overlay.appendChild(message);
       overlay.appendChild(phoneContainer);
+      overlay.appendChild(continueButton);
       document.body.appendChild(overlay);
 
       // Animation function
       const animateRotation = () => {
+        if (!overlayRef.current || !document.body.contains(overlayRef.current)) {
+          return; // Stop animation if overlay is removed
+        }
+        
         phone.style.transform = 'rotate(0deg)';
         setTimeout(() => {
+          if (!overlayRef.current || !document.body.contains(overlayRef.current)) return;
           phone.style.transform = 'rotate(90deg)';
           setTimeout(() => {
+            if (!overlayRef.current || !document.body.contains(overlayRef.current)) return;
             phone.style.transform = 'rotate(0deg)';
             setTimeout(animateRotation, 1000);
           }, 1000);
@@ -187,18 +237,21 @@ const AboutUs = () => {
     };
 
     const checkOrientation = () => {
-      const nowLandscape = window.innerWidth > window.innerHeight;
-      setIsLandscape(nowLandscape);
+      // Only show overlay in portrait mode on very small height screens
+      const isPortrait = window.innerHeight > window.innerWidth;
+      const isSmallHeight = window.innerHeight < 500;
+      
+      setIsLandscape(!isPortrait);
 
-      if (nowLandscape) {
-        // Landscape mode - remove overlay if exists
-        if (overlayRef.current && document.body.contains(overlayRef.current)) {
-          document.body.removeChild(overlayRef.current);
-        }
-      } else {
-        // Portrait mode - show overlay if not already showing
+      // Show overlay for portrait phones with height less than 500px
+      if (isMobile && isPortrait && isSmallHeight) {
         if (!overlayRef.current || !document.body.contains(overlayRef.current)) {
           createOverlay();
+        }
+      } else {
+        // Remove overlay in all other cases
+        if (overlayRef.current && document.body.contains(overlayRef.current)) {
+          document.body.removeChild(overlayRef.current);
         }
       }
     };
@@ -218,10 +271,14 @@ const AboutUs = () => {
         document.body.removeChild(overlayRef.current);
       }
     };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
-    setTimeout(() => setFadeIn(true), 300); // Fade-in effect on page load
+    // Fade-in effect on page load
+    setTimeout(() => setFadeIn(true), 300);
+    
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
   }, []);
 
   const switchOwner = () => {
@@ -229,7 +286,12 @@ const AboutUs = () => {
     setTimeout(() => {
       setCurrentOwner((prev) => (prev === 0 ? 1 : 0));
       setFadeIn(true);
-    }, 500);
+      
+      // Scroll to top on small screens when switching owners
+      if (window.innerWidth <= 768) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 300);
   };
 
   return (
@@ -240,37 +302,41 @@ const AboutUs = () => {
       transition={{ duration: 0.5 }}
     >
       <div className={`owner-section ${currentOwner === 0 ? "left" : "right"}`} style={{ backgroundColor: owners[currentOwner].bgColor }}>
-        <motion.img
-          key={`image-${currentOwner}`}
-          src={owners[currentOwner].image}
-          alt={owners[currentOwner].name}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={`image-${currentOwner}`}
+            src={owners[currentOwner].image}
+            alt={owners[currentOwner].name}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          />
+        </AnimatePresence>
       </div>
 
-      <div className={`text-section ${currentOwner === 0 ? "right" : "left"}`}>
-        <motion.div
-  key={`text-${currentOwner}`}
-  initial={{ opacity: 0, x: currentOwner === 0 ? 100 : -100 }}
-  animate={{ opacity: 1, x: 0 }}
-  exit={{ opacity: 0, x: currentOwner === 0 ? -100 : 100 }}
-  transition={{ duration: 0.5 }}
->
-  <div className="text-content">
-  <h2>{owners[currentOwner].name}</h2>
-  {owners[currentOwner].description}
-  </div>
-  {/* ✅ Grouping Buttons in a Flexbox */}
-  <div className="button-group">
-    <button className="home-btn" onClick={switchOwner}>Switch Owner</button>
-    <button className="home-btn" onClick={() => navigate("/")}>Home</button>
-  </div>
-</motion.div>
+      <div className={`text-section ${currentOwner === 0 ? "right" : "left"}`} ref={textSectionRef}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`text-${currentOwner}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-content">
+              <h2>{owners[currentOwner].name}</h2>
+              {owners[currentOwner].description}
+            </div>
+            <div className="button-group">
+              <button onClick={switchOwner}>
+                Switch to {currentOwner === 0 ? owners[1].name : owners[0].name}
+              </button>
+              <button onClick={() => navigate("/")}>Home</button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
-      
     </motion.div>
   );
 };
