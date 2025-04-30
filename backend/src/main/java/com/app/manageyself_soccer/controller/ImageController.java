@@ -19,7 +19,7 @@ public class ImageController {
     private final ImageService imageService;
 
     @GetMapping("/downloadImage")
-    public ResponseEntity<?> downloadImage(@RequestParam String fileName) {
+    public ResponseEntity<?> downloadImage(@RequestParam("fileName") String fileName) {
         byte[] imageData = imageService.downloadImage(fileName);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))

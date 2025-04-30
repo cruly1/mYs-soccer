@@ -3,14 +3,15 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      network: host
     image: mys-be:1.1
-    ports:
-      - "8080:8080"
+    network_mode: host
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      network: host
     image: mys-fe:1.1
     ports:
-      - "3000:3000"
+     - "3000:3000"

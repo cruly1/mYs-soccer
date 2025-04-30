@@ -30,7 +30,6 @@ public class Image {
     @Column(nullable = false)
     private String type;
 
-    @Lob
-    @Column(name = "image_data", length = 10000)
+    @Column(name = "image_data", columnDefinition = "BYTEA")
     private byte[] imageData;
 }

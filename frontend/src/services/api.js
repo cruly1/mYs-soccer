@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+// VPS CONFIG const API_BASE_URL = "http://128.140.102.156:8080/api";
 const API_BASE_URL = "http://localhost:8080/api";
 const token = sessionStorage.getItem("token");
 // **Players API**
@@ -378,8 +379,7 @@ export const uploadImageForTrainer = async (trainerName, imageFile) => {
 
 export const downloadImage = async (fileName) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/images/downloadImage`, {
-      params: { fileName },
+    const response = await axios.get(`${API_BASE_URL}/images/downloadImage?fileName=${fileName}`, {
       responseType: 'blob', // Important for handling binary data
       headers: {
         Authorization: `Bearer ${token}`,

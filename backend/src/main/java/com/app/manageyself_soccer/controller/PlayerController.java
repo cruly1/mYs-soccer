@@ -1,6 +1,8 @@
 package com.app.manageyself_soccer.controller;
 
 import com.app.manageyself_soccer.dto.PlayerDTO;
+import com.app.manageyself_soccer.payload.AddPlayerRequest;
+import com.app.manageyself_soccer.payload.UpdatePlayerRequest;
 import com.app.manageyself_soccer.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,13 @@ public class PlayerController {
     }
 
     @PostMapping("/addPlayer")
-    public ResponseEntity<PlayerDTO> addPlayer(@RequestBody PlayerDTO player) {
-        PlayerDTO playerDTO = playerService.addPlayer(player);
+    public ResponseEntity<PlayerDTO> addPlayer(@RequestBody AddPlayerRequest request) {
+        PlayerDTO playerDTO = playerService.addPlayer(request);
         return ResponseEntity.ok().body(playerDTO);
     }
 
     @PutMapping("/updatePlayer")
-    public ResponseEntity<PlayerDTO> updatePlayer(@RequestParam("name") String name, @RequestBody PlayerDTO player) {
+    public ResponseEntity<PlayerDTO> updatePlayer(@RequestParam("name") String name, @RequestBody UpdatePlayerRequest player) {
         PlayerDTO playerDTO = playerService.updatePlayer(name, player);
         return ResponseEntity.ok().body(playerDTO);
     }

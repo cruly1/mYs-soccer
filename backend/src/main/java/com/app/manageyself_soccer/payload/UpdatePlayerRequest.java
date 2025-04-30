@@ -1,8 +1,12 @@
-package com.app.manageyself_soccer.dto;
+package com.app.manageyself_soccer.payload;
 
 import com.app.manageyself_soccer.model.enums.Leg;
 import com.app.manageyself_soccer.model.enums.Position;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -11,16 +15,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PlayerDTO {
+public class UpdatePlayerRequest {
     private String name;
     private LocalDate dateOfBirth;
-    private int age;
     private String placeOfBirth;
-    private Integer heightInCm;
+    private Short heightInCm;
     private String slogan;
     private Leg leg;
     private String team;
     private Position position;
-    private String imageName;
-    private String imageType;
 }

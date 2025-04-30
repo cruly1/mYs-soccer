@@ -5,6 +5,8 @@ import com.app.manageyself_soccer.exception.customexceptions.PlayerNotFoundExcep
 import com.app.manageyself_soccer.mapper.PlayerMapper;
 import com.app.manageyself_soccer.model.Player;
 import com.app.manageyself_soccer.dao.PlayerRepository;
+import com.app.manageyself_soccer.payload.AddPlayerRequest;
+import com.app.manageyself_soccer.payload.UpdatePlayerRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,22 +37,28 @@ public class PlayerService {
         return players.stream().map(playerMapper::toPlayerDTO).toList();
     }
 
-    public PlayerDTO addPlayer(PlayerDTO playerDTO) {
-        playerRepository.save(playerMapper.toPlayer(playerDTO));
-        return playerDTO;
+    public PlayerDTO addPlayer(AddPlayerRequest request) {
+        Player player = playerMapper.toPlayer(request);
+        playerRepository.save(player);
+        return playerMapper.toPlayerDTO(player);
     }
 
-    public PlayerDTO updatePlayer(String name, PlayerDTO playerDTO) {
+    public PlayerDTO updatePlayer(String name, UpdatePlayerRequest request) {
         Player player = playerRepository.findByName(name)
                 .orElseThrow(() -> new PlayerNotFoundException(playerNotFound));
 
-        player.setName(playerDTO.getName());
-        player.setDateOfBirth(playerDTO.getDateOfBirth());
-        player.setPosition(playerDTO.getPosition());
+        player.setName(request.getName());
+        player.setDateOfBirth(request.getDateOfBirth());
+        player.setPlaceOfBirth(request.getPlaceOfBirth());
+        player.setHeightInCm(request.getHeightInCm());
+        player.setSlogan(request.getSlogan());
+        player.setLeg(request.getLeg());
+        player.setTeam(request.getTeam());
+        player.setPosition(request.getPosition());
 
         playerRepository.save(player);
 
-        return playerDTO;
+        return playerMapper.toPlayerDTO(player);
     }
 
     public String deletePlayer(String name) {

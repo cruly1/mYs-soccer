@@ -4,6 +4,7 @@ import { getExpertiseByTitle, downloadImage } from "../services/api";
 import "./ServicePage.scss";
 
 const ServicePage = () => {
+  // VPS CONFIG const API_BASE_URL = "http://128.140.102.156:8080/api";
   const API_BASE_URL = "http://localhost:8080/api";
   const { title } = useParams();
   const navigate = useNavigate();
