@@ -13,12 +13,14 @@ import ServicePage from "./pages/ServicePage";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import NewsDetail from "./pages/NewsDetail";
+import "./App.css"; // Import your global styles here
 
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
     <AnimatePresence mode="wait">
+      <main style={{ flex: 1 }}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/news" element={<News />} />
@@ -31,12 +33,14 @@ const AnimatedRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
+      </main>
     </AnimatePresence>
   );
 };
 
 const App = () => {
   return (
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
     <Router>
     <ToastContainer 
     position="top-right"
@@ -52,6 +56,7 @@ const App = () => {
     />
       <AnimatedRoutes />
     </Router>
+    </div>
   );
 };
 

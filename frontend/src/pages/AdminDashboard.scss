@@ -2,6 +2,7 @@
   text-align: center;
   padding: 50px;
 
+  
   .form-section {
     margin-bottom: 30px;
 
@@ -35,56 +36,71 @@
   }
 }
 
-.admin-dashboard {
-  text-align: center;
-  padding: 50px;
+.admin-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) auto auto;
+  gap: 10px;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
 
-  .management-section {
-    margin-bottom: 40px;
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 
-    h3 {
-      font-size: 22px;
-      margin-bottom: 10px;
+  button {
+    padding: 6px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+      background-color: #0056b3;
     }
   }
 
-  .admin-item {
+  .delete-btn {
+    background-color: #dc3545;
+
+    &:hover {
+      background-color: #a71d2a;
+    }
+  }
+
+  .player-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .player-info {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: #b8b3b3;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-
-    input, textarea, select {
-      margin-right: 5px;
-    }
-
-    button {
-      padding: 5px 10px;
-      margin-left: 5px;
-      cursor: pointer;
-    }
-
-    .delete-btn {
-      background: red;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-  }
-
-  .logout-btn {
-    margin-top: 20px;
-    padding: 10px;
-    background: red;
-    color: white;
-    border: none;
-    cursor: pointer;
+    gap: 10px;
   }
 }
+
+.logout-btn {
+  margin-top: 20px;
+  padding: 10px;
+  background: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
 
 .image-upload {
   margin: 10px 0;
@@ -124,27 +140,12 @@
   border-radius: 4px;
 }
 
-.player-info, .news-info {
+.player-info, .news-info, .expertise-info, .trainer-info {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.admin-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #f5f5f5;
-  border-radius: 4px;
-  
-  .item-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-}
 
 .form-row {
   margin-bottom: 15px;

@@ -9,7 +9,7 @@ const PlayerCard = ({ name, imageName, position, club, onClick }) => {
 
   const imageUrl = imageName 
     ? `${API_BASE_URL}/images/downloadImage?fileName=${imageName}`
-    : "/default-player.jpg";
+    : "/default_pic.png";
 
   return (
     <div className="player-card" onClick={onClick}>

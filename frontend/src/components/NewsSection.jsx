@@ -10,7 +10,7 @@ const NewsSection = () => {
   useEffect(() => {
     const fetchNews = async () => {
       const data = await getFirstFourNews();
-      console.log("Fetched news:", data); // Debugging line to check fetched data
+      //console.log("Fetched news:", data); // Debugging line to check fetched data
       setNews(data);
     };
 

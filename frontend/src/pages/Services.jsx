@@ -17,6 +17,7 @@ const Services = () => {
   }, []);
 
   return (
+    <div className="page-wrapper services-page">
     <div className="services-page">
       {/* Background Image */}
       <div className="background-image"></div>
@@ -45,6 +46,7 @@ const Services = () => {
       </div>
 
       <Footer />
+    </div>
     </div>
   );
 };

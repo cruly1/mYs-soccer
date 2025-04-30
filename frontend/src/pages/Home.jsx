@@ -50,7 +50,7 @@ const Home = () => {
       {/* Welcome Text */}
       <div className="welcome-text">
         <h1>Welcome to ManageYself</h1>
-        <p>Your ultimate platform to manage players, teams, and events easily!</p>
+        <p>Take your destiny into your own hands!</p>
       </div>
 
       {/* Main Content Section (scroll target) */}

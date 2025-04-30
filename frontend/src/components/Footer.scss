@@ -1,14 +1,15 @@
 .footer {
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+  // Removed: position: relative;
   color: white;
   text-align: center;
+  background-color: #22222296;
   padding: 10px 0;
-  position: relative;
-  bottom: 0;
   font-size: 15px;
-   .footer-content {
+  margin-top: auto; // 👈 KEY PART: push footer to bottom
+
+  .footer-content {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -40,31 +41,48 @@
       opacity: 0.9;
     }
 
-    .instagram-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-      color: white;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
-      &:hover {
-        transform: translateY(-3px) scale(1.1);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
+.instagram-icon,
+.tiktok-icon,
+.youtube-icon,
+.facebook-icon {
+  font-size: 28px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 
-      &:active {
-        transform: scale(0.95);
-      }
+  &:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
 
-      .instagram-icon {
-        font-size: 1.2rem;
-      }
-    }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.instagram-icon{
+  color: #fff;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+.tiktok-icon {
+  color: #010101; // TikTok black
+  background: linear-gradient(135deg, #25f4ee, #fe2c55);
+}
+
+.youtube-icon {
+  color: #fff;
+  background-color: #ff0000;
+}
+
+.facebook-icon {
+  color: #fff;
+  background-color: #1877f2;
+}
+
   }
 }
 

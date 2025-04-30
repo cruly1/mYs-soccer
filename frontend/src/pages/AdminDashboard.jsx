@@ -28,7 +28,17 @@ const AdminDashboard = () => {
   // VPS CONFIG const API_BASE_URL = "http://128.140.102.156:8080/api";
   const API_BASE_URL = "http://localhost:8080/api";
   const navigate = useNavigate();
-  const [player, setPlayer] = useState({ name: "", dateOfBirth: "", position: "CSATAR" });
+  const [player, setPlayer] = useState({
+  name: "",
+  dateOfBirth: "",
+  placeOfBirth: "",
+  heightInCm: "",
+  weightInKg: "",
+  slogan: "",
+  leg: "RIGHT", // or "LEFT"
+  team: "",
+  position: "CSATAR",
+});
   const [news, setNews] = useState({ title: "", postDate: "", briefContent: "", content: "" });
   const [players, setPlayers] = useState([]);
   const [somethingNews, setSomethingNews] = useState([]);
@@ -61,33 +71,38 @@ const [availableTrainers, setAvailableTrainers] = useState([]);
 
   // Handle adding a player
    const handleAddPlayer = async () => {
-    try {
-      // First create the player
-      const createdPlayer = await addPlayer(player);
-      
+  try {
+    const createdPlayer = await addPlayer(player); // `player` now includes the new fields
 
-      // Then upload image if provided
-      if (playerImage) {
-        try {
-          const updatedPlayer = await uploadImageForPlayer(createdPlayer.name, playerImage);
-          
-          // Update local state with the image info
-          setPlayers(prev => prev.map(p => 
-            p.name === createdPlayer.name ? updatedPlayer : p
-          ));
-        } catch (uploadError) {
-          toast.warning('Player created but image upload failed');
-        }
+    if (playerImage) {
+      try {
+        const updatedPlayer = await uploadImageForPlayer(createdPlayer.name, playerImage);
+        setPlayers(prev => prev.map(p => 
+          p.name === createdPlayer.name ? updatedPlayer : p
+        ));
+      } catch (uploadError) {
+        toast.warning('Player created but image upload failed');
       }
-
-      // Reset form
-      setPlayer({ name: "", dateOfBirth: "", position: "CSATAR" });
-      setPlayerImage(null);
-    } catch (error) {
-      toast.error('Failed to create player');
-      console.error('Error adding player:', error);
     }
-  };
+
+    // Reset form after successful creation
+    setPlayer({
+      name: "",
+      dateOfBirth: "",
+      placeOfBirth: "",
+      heightInCm: "",
+      weightInKg: "",
+      slogan: "",
+      leg: "RIGHT",
+      team: "",
+      position: "CSATAR",
+    });
+    setPlayerImage(null);
+  } catch (error) {
+    toast.error('Failed to create player');
+  }
+};
+
 
   // Handle adding news
   const handleAddNews = async () => {
@@ -115,7 +130,7 @@ const [availableTrainers, setAvailableTrainers] = useState([]);
       setNewsImage(null);
     } catch (error) {
       toast.error('Failed to create news');
-      console.error('Error adding news:', error);
+      //console.error('Error adding news:', error);
     }
   };
 
@@ -214,7 +229,7 @@ const handleImageUpload = async () => {
     setSelectedEntityId('');
   } catch (error) {
     toast.error('Failed to upload image');
-    console.error('Error uploading image:', error);
+    //console.error('Error uploading image:', error);
   }
 };
 
@@ -226,7 +241,7 @@ const handleImageUpload = async () => {
         setImageState(prev => ({ ...prev, [fileName]: imageUrl }));
       }
     } catch (error) {
-      console.error('Error fetching image:', error);
+      //console.error('Error fetching image:', error);
     }
   };
 
@@ -314,7 +329,7 @@ const handleEditNews = (newsItem) => {
 
    const fetchExpertise = async () => {
     const data = await getAllExpertise();
-    console.log(data);
+    //console.log(data);
     setExpertiseList(data);
   };
 
@@ -338,7 +353,7 @@ const handleEditNews = (newsItem) => {
       fetchExpertise();
       
     } catch (error) {
-      console.error("Error updating expertise:", error);
+      //console.error("Error updating expertise:", error);
       
     }
   }
@@ -369,7 +384,7 @@ const handleEditNews = (newsItem) => {
   };
 
   const handleEditExpertise = (exp) => {
-  console.log("Editing Expertise Before Setting:", exp); // ✅ Check what data we are setting
+  //console.log("Editing Expertise Before Setting:", exp); // ✅ Check what data we are setting
 
   setEditingExpertise({
     ...exp,
@@ -421,10 +436,52 @@ useEffect(() => {
         <input type="text" placeholder="Name" onChange={(e) => setPlayer({ ...player, name: e.target.value })} />
         <input type="date" onChange={(e) => setPlayer({ ...player, dateOfBirth: e.target.value })} />
         <select className="dropdown" onChange={(e) => setPlayer({ ...player, position: e.target.value })} value={player.position}>
-          <option value="CSATAR">CSATAR</option>
-          <option value="KAPUS">KAPUS</option>
-          <option value="VEDO">VEDO</option>
+          <option value="CSATAR">Csatár</option>
+          <option value="KAPUS">Kapus</option>
+          <option value="VEDO">Védő</option>
         </select>
+        <input
+          type="text"
+          placeholder="Place of Birth"
+          value={player.placeOfBirth}
+          onChange={(e) => setPlayer({ ...player, placeOfBirth: e.target.value })}
+        />
+
+        <input
+          type="number"
+          placeholder="Height (cm)"
+          value={player.heightInCm}
+          onChange={(e) => setPlayer({ ...player, heightInCm: e.target.value })}
+        />
+
+        <input
+          type="number"
+          placeholder="Weight (kg)"
+          value={player.weightInKg}
+          onChange={(e) => setPlayer({ ...player, weightInKg: e.target.value })}
+        />
+
+        <input
+          type="text"
+          placeholder="Slogan"
+          value={player.slogan}
+          onChange={(e) => setPlayer({ ...player, slogan: e.target.value })}
+        />
+
+        <select
+          value={player.leg}
+          onChange={(e) => setPlayer({ ...player, leg: e.target.value })}
+        >
+          <option value="RIGHT">Right</option>
+          <option value="LEFT">Left</option>
+        </select>
+
+        <input
+          type="text"
+          placeholder="Team"
+          value={player.team}
+          onChange={(e) => setPlayer({ ...player, team: e.target.value })}
+        />
         
         <button onClick={handleAddPlayer}>Add Player</button>
       </div>
@@ -594,51 +651,92 @@ useEffect(() => {
     <div className="management-section">
     <h3>Manage Players</h3>
     {players.map((player, index) => (
-        <div key={index} className="admin-item">
-        {editingPlayer && editingPlayer.originalName === player.name ? ( // ✅ Compare with stored original name
-            <>
+      <div key={index} className="admin-item">
+        {editingPlayer && editingPlayer.originalName === player.name ? (
+          <>
             <input
-                type="text"
-                value={editingPlayer.name}
-                onChange={(e) => setEditingPlayer({ ...editingPlayer, name: e.target.value })}
+              type="text"
+              value={editingPlayer.name}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, name: e.target.value })}
+              placeholder="Name"
             />
             <input
-                type="date"
-                value={editingPlayer.dateOfBirth}
-                onChange={(e) => setEditingPlayer({ ...editingPlayer, dateOfBirth: e.target.value })}
+              type="date"
+              value={editingPlayer.dateOfBirth}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, dateOfBirth: e.target.value })}
+            />
+            <input
+              type="text"
+              value={editingPlayer.placeOfBirth}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, placeOfBirth: e.target.value })}
+              placeholder="Place of Birth"
+            />
+            <input
+              type="number"
+              value={editingPlayer.heightInCm}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, heightInCm: parseInt(e.target.value) })}
+              placeholder="Height (cm)"
+            />
+            <input
+              type="number"
+              value={editingPlayer.weightInKg}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, weightInKg: parseInt(e.target.value) })}
+              placeholder="Weight (kg)"
+            />
+            <input
+              type="text"
+              value={editingPlayer.slogan}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, slogan: e.target.value })}
+              placeholder="Slogan"
             />
             <select
-                value={editingPlayer.position}
-                onChange={(e) => setEditingPlayer({ ...editingPlayer, position: e.target.value })}
+              value={editingPlayer.leg}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, leg: e.target.value })}
             >
-                <option value="CSATAR">CSATAR</option>
-                <option value="KAPUS">KAPUS</option>
-                <option value="VEDO">VEDO</option>
+              <option value="RIGHT">Right</option>
+              <option value="LEFT">Left</option>
+            </select>
+            <input
+              type="text"
+              value={editingPlayer.team}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, team: e.target.value })}
+              placeholder="Team"
+            />
+            <select
+              value={editingPlayer.position}
+              onChange={(e) => setEditingPlayer({ ...editingPlayer, position: e.target.value })}
+            >
+              <option value="CSATAR">Csatár</option>
+              <option value="KAPUS">Kapus</option>
+              <option value="VEDO">Védő</option>
             </select>
             <button onClick={handleUpdatePlayer}>Save</button>
             <button onClick={() => setEditingPlayer(null)}>Cancel</button>
-            </>
+          </>
         ) : (
-            <>
+          <>
             <div className="player-info">
-                  {player.imageName && (
-                  <img 
-                    src={`${API_BASE_URL}/images/downloadImage?fileName=${player.imageName}`}
-                    alt={player.name}
-                    className="player-thumbnail"
-                    onError={(e) => {
-                      e.target.style.display = 'none'; // Hide if image fails to load
-                    }}
-                  />
-                )}
-            <span>{player.name} - {player.position} - {player.dateOfBirth}</span>
+              {player.imageName && (
+                <img 
+                  src={`${API_BASE_URL}/images/downloadImage?fileName=${player.imageName}`}
+                  alt={player.name}
+                  className="player-thumbnail"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              )}
+              <span>
+                <strong>{player.name}</strong> - <strong>{player.position}</strong> - <strong>{player.dateOfBirth}</strong> - <strong>{player.placeOfBirth}</strong> - <strong>{player.heightInCm} cm</strong> - <strong>{player.weightInKg} kg</strong> - <strong>{player.slogan || "No slogan yet"}</strong> - <strong>{player.leg}</strong> - <strong>{player.team || "No team"}</strong>
+              </span>
             </div>
             <button onClick={() => handleEditPlayer(player)}>Edit</button>
             <button className="delete-btn" onClick={() => handleDeletePlayer(player.name)}>Delete</button>
-            </>
+          </>
         )}
-        </div>
+      </div>
     ))}
+
     </div>
 
 
@@ -684,7 +782,7 @@ useEffect(() => {
                     }}
                   />
                 )}
-              <span>{newsItem.title} - {newsItem.postDate}</span>
+              <span><strong>{newsItem.title}</strong> - <strong>{newsItem.postDate}</strong></span>
               </div>
               <button onClick={() => handleEditNews(newsItem)}>Edit</button>
               <button className="delete-btn" onClick={() => handleDeleteNews(newsItem.title)}>Delete</button>
@@ -730,9 +828,12 @@ useEffect(() => {
         </>
       ) : (
         <>
-          <span>{exp.title} - {exp.briefContent}</span>
+          <div className="expertise-info">
+          <span><strong>{exp.title}</strong> - <strong>{exp.briefContent}</strong></span>
+          </div>
           <button onClick={() => handleEditExpertise(exp)}>Edit</button>
           <button className="delete-btn" onClick={() => handleDeleteExpertise(exp.title)}>Delete</button>
+          
         </>
       )}
     </div>
@@ -743,11 +844,12 @@ useEffect(() => {
       <h3>Manage Trainers</h3>
       {expertiseList.map((exp) => (
         <div key={exp.title} className="admin-trainer-section">
-          <h4>{exp.title} - Trainers</h4>
           {exp.trainers.length > 0 ? (
             exp.trainers.map((trainer) => (
               <div key={trainer.name} className="admin-item">
-                <span>{trainer.name} - {trainer.briefContent}</span>
+                <div className="trainer-info">
+                  <span><strong>{trainer.name}</strong> - <strong>{trainer.briefContent}</strong></span>
+                </div>
                 <button className="delete-btn" onClick={() => handleDeleteTrainer(exp.title, trainer.name)}>Delete</button>
               </div>
             ))

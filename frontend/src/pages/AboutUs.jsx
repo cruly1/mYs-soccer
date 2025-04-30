@@ -8,6 +8,53 @@ const owner2 = require("../assets/owner2.jpeg");
 
 const owners = [
   {
+    name: "Marton Attila",
+    image: owner2,
+    description: (
+  <>
+    <p>
+      <strong>Football has been my passion since childhood</strong> – I started playing at the age of five and was always considered talented. Despite this, throughout my career, I experienced the challenges of progressing without the right connections or support system.
+    </p>
+    
+    <p>
+      My parents supported me in every way they could, but the system often overshadowed me, leaving me feeling powerless at times. Through perseverance and my love for the sport, I managed to reach the professional level, playing in the <strong>Hungarian NB1</strong> and later in the <strong>NB2</strong>.
+    </p>
+    
+    <p>
+      These years taught me invaluable lessons about:
+      <br />- The game and life's challenges
+      <br />- How much talent is lost due to lack of proper support
+    </p>
+    
+    <p>
+      <strong>This realization drove me to create an agency</strong> where I could use my experience to help others. My goal is to:
+      <br />- Support talented young players
+      <br />- Be involved in every aspect of their careers
+      <br />- Provide professional advice
+      <br />- Build valuable networks
+      <br />- Help with tough decisions
+    </p>
+    
+    <p>
+      I believe that <strong>every talent deserves the opportunity</strong> to reach their full potential and achieve their dreams.
+    </p>
+    
+    <p>
+      <strong>This venture is not just a job for me; it's a lifelong mission.</strong> I am committed with all my heart and conscience to giving my very best to those who turn to me for guidance.
+    </p>
+    
+    <p>
+      <strong>My personal experiences have taught me</strong> the importance of having someone who:
+      <br />- Believes in you
+      <br />- Supports you on your journey
+      <br /><br />
+      I aspire to be that person for the next generation.
+    </p>
+  </>
+),
+    bgColor: "#3498db", // Blue
+  },
+  {
     name: "Futács Márkó",
     image: owner1,
     description: (
@@ -44,53 +91,7 @@ const owners = [
     ),
     bgColor: "#2ecc71", // Green
   },
-  {
-    name: "Márton Attila",
-    image: owner2,
-    description: (
-  <>
-    <p>
-      <strong>Football has been my passion since childhood</strong> – I started playing at the age of five and was always considered talented. Despite this, throughout my career, I experienced the challenges of progressing without the right connections or support system.
-    </p>
-    
-    <p>
-      My parents supported me in every way they could, but the system often overshadowed me, leaving me feeling powerless at times. Through perseverance and my love for the sport, I managed to reach the professional level, playing in the <strong>Hungarian NB2</strong> and later in the <strong>NB1</strong>.
-    </p>
-    
-    <p>
-      These years taught me invaluable lessons about:
-      <br />- The game and life's challenges
-      <br />- How much talent is lost due to lack of proper support
-    </p>
-    
-    <p>
-      <strong>This realization drove me to create a platform</strong> where I could use my experience to help others. My goal is to:
-      <br />- Support talented young players
-      <br />- Be involved in every aspect of their careers
-      <br />- Provide professional advice
-      <br />- Build valuable networks
-      <br />- Help with tough decisions
-    </p>
-    
-    <p>
-      I believe that <strong>every talent deserves the opportunity</strong> to reach their full potential and achieve their dreams.
-    </p>
-    
-    <p>
-      <strong>This venture is not just a job for me; it's a lifelong mission.</strong> I am committed with all my heart and conscience to giving my very best to those who turn to me for guidance.
-    </p>
-    
-    <p>
-      <strong>My personal experiences have taught me</strong> the importance of having someone who:
-      <br />- Believes in you
-      <br />- Supports you on your journey
-      <br /><br />
-      I aspire to be that person for the next generation.
-    </p>
-  </>
-),
-    bgColor: "#3498db", // Blue
-  },
+  
 ];
 
 const AboutUs = () => {
@@ -260,7 +261,7 @@ const AboutUs = () => {
 >
   <div className="text-content">
   <h2>{owners[currentOwner].name}</h2>
-  <p>{owners[currentOwner].description}</p>
+  {owners[currentOwner].description}
   </div>
   {/* ✅ Grouping Buttons in a Flexbox */}
   <div className="button-group">
@@ -268,8 +269,6 @@ const AboutUs = () => {
     <button className="home-btn" onClick={() => navigate("/")}>Home</button>
   </div>
 </motion.div>
-
-        
       </div>
       
     </motion.div>

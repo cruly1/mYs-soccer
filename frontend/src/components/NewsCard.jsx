@@ -12,7 +12,7 @@ const NewsCard = ({ title, postDate, briefContent, imageName }) => {
   // Construct the image URL
   const imageUrl = imageName 
     ? `${API_BASE_URL}/images/downloadImage?fileName=${imageName}`
-    : "/default-news.jpg";
+    : "/default_pic.png";
 
    return (
     <div className="news-card">

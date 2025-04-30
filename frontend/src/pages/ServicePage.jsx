@@ -44,7 +44,7 @@ const ServicePage = () => {
           setError(true);
         }
       } catch (error) {
-        console.error("Error fetching service:", error);
+        //console.error("Error fetching service:", error);
         setError(true);
       }
     };
@@ -101,7 +101,7 @@ const ServicePage = () => {
             {service.trainers.map((trainer, index) => {
               const imageUrl = trainer.imageName 
                 ? trainerImages[trainer.name] || `${API_BASE_URL}/images/downloadImage?fileName=${trainer.imageName}`
-                : "/default-trainer.jpg";
+                : "/default_pic.png";
 
               return (
                 <div key={index} className="trainer-card">
@@ -114,7 +114,7 @@ const ServicePage = () => {
                       width={200}
                       height={200}
                       onError={(e) => {
-                        e.target.src = "/default-trainer.jpg";
+                        e.target.src = "/default_pic.png";
                         e.target.onerror = null;
                       }}
                     />

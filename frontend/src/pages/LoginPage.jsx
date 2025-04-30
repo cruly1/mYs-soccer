@@ -28,7 +28,7 @@ const LoginPage = () => {
       
       // Store the token in localStorage
       sessionStorage.setItem("token", token);
-      console.log("Token stored in sessionStorage:", token);
+      //console.log("Token stored in sessionStorage:", token);
       // Set default Authorization header for future requests
       //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       

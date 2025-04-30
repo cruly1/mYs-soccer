@@ -55,8 +55,7 @@ public class Player {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Leg leg;
-
-    @Column(nullable = false)
+    
     private String team;
 
     @Column(nullable = false)

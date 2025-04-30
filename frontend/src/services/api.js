@@ -10,7 +10,7 @@ export const getAllPlayers = async () => {
     const response = await axios.get(`${API_BASE_URL}/players/getAllPlayers`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching players:", error);
+    //console.error("Error fetching players:", error);
     return [];
   }
 };
@@ -20,7 +20,7 @@ export const getFirstFourPlayers = async () => {
     const response = await axios.get(`${API_BASE_URL}/players/getFirstFourPlayers`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching first four players:", error);
+    //console.error("Error fetching first four players:", error);
     return [];
   }
 };
@@ -30,7 +30,7 @@ export const getPlayerByName = async (name) => {
     const response = await axios.get(`${API_BASE_URL}/players/getPlayerByName?name=${name}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching player:", error);
+    //console.error("Error fetching player:", error);
     return null;
   }
 };
@@ -50,7 +50,7 @@ export const addPlayer = async (playerData, imageFile) => {
     toast.success("Player added successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error adding player:", error);
+    //console.error("Error adding player:", error);
     toast.error("Failed to add player.");
   }
 };
@@ -68,7 +68,7 @@ export const updatePlayer = async (originalName, playerData) => {
     toast.success("Player updated successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error updating player:", error);
+    //console.error("Error updating player:", error);
     toast.error("Failed to update player.");
     
   }
@@ -85,7 +85,7 @@ export const deletePlayer = async (name) => {
     });
     toast.success("Player deleted successfully!");
   } catch (error) {
-    console.error("Error deleting player:", error);
+    //console.error("Error deleting player:", error);
     toast.error("Failed to delete player.");
   }
 };
@@ -96,7 +96,7 @@ export const getAllNews = async () => {
     const response = await axios.get(`${API_BASE_URL}/news/getAllNews`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching news:", error);
+    //console.error("Error fetching news:", error);
     return [];
   }
 };
@@ -106,7 +106,7 @@ export const getFirstFourNews = async () => {
     const response = await axios.get(`${API_BASE_URL}/news/getFirstFourNews`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching first four news:", error);
+    //console.error("Error fetching first four news:", error);
     return [];
   }
 };
@@ -115,7 +115,7 @@ export const getNewsByTitle = async (title) => {
     const response = await axios.get(`${API_BASE_URL}/news/getNewsByTitle?title=${title}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching news:", error);
+    //console.error("Error fetching news:", error);
     return null;
   }
 };
@@ -135,7 +135,7 @@ export const addNews = async (newsData, imageFile) => {
     toast.success("News added successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error adding news:", error);
+    //console.error("Error adding news:", error);
     toast.error("Failed to add news.");
   }
 };
@@ -149,7 +149,7 @@ export const deleteNews = async (title) => {
     });
     toast.success("News deleted successfully!");
   } catch (error) {
-    console.error("Error deleting news:", error);
+    //console.error("Error deleting news:", error);
     toast.error("Failed to delete news.");
   }
 };
@@ -168,7 +168,7 @@ export const updateNews = async (originalTitle, newsData) => {
     toast.success("News updated successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error updating news:", error);
+    //console.error("Error updating news:", error);
     toast.error("Failed to update news.");
     throw error;
   }
@@ -181,7 +181,7 @@ export const getExpertiseByTitle = async (title) => {
     const response = await axios.get(`${API_BASE_URL}/expertise/getExpertiseByTitle?title=${encodedTitle}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching expertise:", error.response?.data || error.message);
+    //console.error("Error fetching expertise:", error.response?.data || error.message);
     return null;
   }
 };
@@ -194,7 +194,7 @@ export const getAllExpertise = async () => {
     const response = await axios.get(`${API_BASE_URL}/expertise/getAllExpertise`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching all expertise:", error);
+    //console.error("Error fetching all expertise:", error);
     return [];
   }
 };
@@ -209,7 +209,7 @@ export const createExpertise = async (expertiseData) => {
     toast.success("Expertise created successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error creating expertise:", error);
+    //console.error("Error creating expertise:", error);
     toast.error("Failed to create expertise.");
     throw error;
   }
@@ -225,7 +225,7 @@ export const updateExpertise = async (title, expertiseData) => {
     toast.success("Expertise updated successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error updating expertise:", error);
+    //console.error("Error updating expertise:", error);
     toast.error("Failed to update expertise.");
     throw error;
   }
@@ -240,7 +240,7 @@ export const deleteExpertise = async (title) => {
     });
     toast.success("Expertise deleted successfully!");
   } catch (error) {
-    console.error("Error deleting expertise:", error);
+    //console.error("Error deleting expertise:", error);
     toast.error("Failed to delete expertise.");
     throw error;
   }
@@ -257,7 +257,7 @@ export const createTrainer = async (title, trainerData) => {
     toast.success("Trainer created successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error creating trainer:", error);
+    //console.error("Error creating trainer:", error);
     toast.error("Failed to create trainer.");
     throw error;
   }
@@ -272,7 +272,7 @@ export const deleteTrainer = async (title, name) => {
     });
     toast.success("Trainer deleted successfully!");
   } catch (error) {
-    console.error("Error deleting trainer:", error);
+    //console.error("Error deleting trainer:", error);
     toast.error("Failed to delete trainer.");
     throw error;
   }
@@ -290,7 +290,7 @@ export const createStudies = async (title, studies) => {
     toast.success("Studies created successfully!");
     return response.data;
   } catch (error) {
-    console.error("Error creating studies:", error.response?.data || error.message);
+    //console.error("Error creating studies:", error.response?.data || error.message);
     toast.error("Failed to create studies.");
     return null;
   }
@@ -317,7 +317,7 @@ export const uploadImageForPlayer = async (playerName, imageFile) => {
     toast.success('Player image uploaded successfully!');
     return updatedPlayer;
   } catch (error) {
-    console.error('Error uploading player image:', error.response?.data || error.message);
+    //console.error('Error uploading player image:', error.response?.data || error.message);
     toast.error('Failed to upload player image.');
     throw error;
   }
@@ -344,7 +344,7 @@ export const uploadImageForNews = async (newsTitle, imageFile) => {
     toast.success('News image uploaded successfully!');
     return updatedNews;
   } catch (error) {
-    console.error('Error uploading news image:', error.response?.data || error.message);
+    //console.error('Error uploading news image:', error.response?.data || error.message);
     toast.error('Failed to upload news image.');
     throw error;
   }
@@ -371,7 +371,7 @@ export const uploadImageForTrainer = async (trainerName, imageFile) => {
     toast.success('Trainer image uploaded successfully!');
     return updatedTrainer;
   } catch (error) {
-    console.error('Error uploading trainer image:', error.response?.data || error.message);
+    //console.error('Error uploading trainer image:', error.response?.data || error.message);
     toast.error('Failed to upload trainer image.');
     throw error;
   }
@@ -388,7 +388,7 @@ export const downloadImage = async (fileName) => {
     });
     return URL.createObjectURL(response.data);
   } catch (error) {
-    console.error('Error downloading image:', error);
+    //console.error('Error downloading image:', error);
     return null;
   }
 };

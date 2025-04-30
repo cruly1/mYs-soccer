@@ -3,6 +3,10 @@
   padding: 20px;
   color: white;
 
+  .footer{
+    top: 52vh;
+    position: relative;
+  }
   .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
