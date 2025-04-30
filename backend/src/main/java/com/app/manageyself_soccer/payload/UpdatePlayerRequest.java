@@ -20,6 +20,7 @@ public class UpdatePlayerRequest {
     private LocalDate dateOfBirth;
     private String placeOfBirth;
     private Short heightInCm;
+    private Short weightInKg;
     private String slogan;
     private Leg leg;
     private String team;

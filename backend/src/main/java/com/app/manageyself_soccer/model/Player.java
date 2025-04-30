@@ -47,6 +47,9 @@ public class Player {
     @Column(name = "height_in_cm", nullable = false)
     private Short heightInCm;
 
+    @Column(name = "weight_in_kg", nullable = false)
+    private Short weightInKg;
+
     private String slogan;
 
     @Column(nullable = false)

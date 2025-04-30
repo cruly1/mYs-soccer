@@ -16,7 +16,8 @@ public class PlayerDTO {
     private LocalDate dateOfBirth;
     private int age;
     private String placeOfBirth;
-    private Integer heightInCm;
+    private Short heightInCm;
+    private Short weightInKg;
     private String slogan;
     private Leg leg;
     private String team;

@@ -51,6 +51,7 @@ public class PlayerService {
         player.setDateOfBirth(request.getDateOfBirth());
         player.setPlaceOfBirth(request.getPlaceOfBirth());
         player.setHeightInCm(request.getHeightInCm());
+        player.setWeightInKg(request.getWeightInKg());
         player.setSlogan(request.getSlogan());
         player.setLeg(request.getLeg());
         player.setTeam(request.getTeam());
