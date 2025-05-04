@@ -7,7 +7,7 @@ COPY pom.xml .
 
 COPY src ./src
 
-RUN mvn clean install
+RUN mvn clean package
 
 # Run stage
 FROM eclipse-temurin:17-jre-alpine

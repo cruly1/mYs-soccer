@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./PlayerCard.scss";
 
 const PlayerCard = ({ name, imageName, position, club, onClick }) => {
-  // VPS CONFIG const API_BASE_URL = "http://128.140.102.156:8080/api";
-  const API_BASE_URL = "http://localhost:8080/api";
+//  const API_BASE_URL = "http://128.140.102.156:8080/api";
+  const API_BASE_URL = "https://api.manageyself.com/api";
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 

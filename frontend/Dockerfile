@@ -1,21 +1,25 @@
-FROM node:22
-
-RUN groupadd -r appgroup && useradd -r -g appgroup mysuser
+# Build stage
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-RUN chown -R mysuser:appgroup /app
-
 COPY package*.json ./
 
-RUN mkdir -p /app/node_modules && chown -R mysuser:appgroup /app
-
-RUN npm install --omit=dev
+RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-USER mysuser
+# Run stage
+FROM nginx:alpine
 
-ENTRYPOINT ["npm", "run", "start"]
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /etc/nginx/conf.d
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

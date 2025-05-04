@@ -25,8 +25,8 @@ import {
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
-  // VPS CONFIG const API_BASE_URL = "http://128.140.102.156:8080/api";
-  const API_BASE_URL = "http://localhost:8080/api";
+//  const API_BASE_URL = "http://128.140.102.156:8080/api";
+  const API_BASE_URL = "https://api.manageyself.com/api";
   const navigate = useNavigate();
   const [player, setPlayer] = useState({
   name: "",
@@ -67,7 +67,16 @@ const [availablePlayers, setAvailablePlayers] = useState([]);
 const [availableNews, setAvailableNews] = useState([]);
 const [availableTrainers, setAvailableTrainers] = useState([]);
 
-  
+useEffect(() => {
+  const hasReloaded = localStorage.getItem("hasReloaded");
+
+  if (!hasReloaded) {
+    localStorage.setItem("hasReloaded", "true");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+}, []);  
 
   // Handle adding a player
    const handleAddPlayer = async () => {
@@ -427,7 +436,7 @@ useEffect(() => {
     return null;
   }
 
-  return (
+return (
     <div className="admin-dashboard">
       <h2>Admin Panel</h2>
       
@@ -860,7 +869,7 @@ useEffect(() => {
       ))}
 
 
-      <button className="logout-btn" onClick={() => { sessionStorage.removeItem("token"); navigate("/"); }}>
+      <button className="logout-btn" onClick={() => { sessionStorage.removeItem("token"); localStorage.removeItem("hasReloaded"); navigate("/"); }}>
         Home
       </button>
     </div>

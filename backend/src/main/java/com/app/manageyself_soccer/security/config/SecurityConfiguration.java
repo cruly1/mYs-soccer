@@ -50,8 +50,8 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // VPS CONFIG configuration.setAllowedOrigins(List.of("http://128.140.102.156:3000"));
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+//        configuration.setAllowedOrigins(List.of("http://128.140.102.156:3000"));
+	configuration.setAllowedOrigins(List.of("https://manageyself.com", "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Requestor-Type"));
         configuration.setExposedHeaders(List.of("Authorization"));

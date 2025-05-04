@@ -17,8 +17,8 @@ const LoginPage = () => {
 
     try {
       // Replace with your Spring Boot endpoint
-      // VPS CONFIG const response = await axios.post("http://128.140.102.156:8080/api/auth/authenticate", {
-        const response = await axios.post("http://localhost:8080/api/auth/authenticate", {
+//      const response = await axios.post("http://128.140.102.156:8080/api/auth/authenticate", {
+      const response = await axios.post("https://api.manageyself.com/api/auth/authenticate", {
         username,
         password
       });

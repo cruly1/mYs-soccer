@@ -2,16 +2,16 @@ spring:
   application:
     name: manageyself-soccer
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:./DB
-    username: admin
-    password: admin
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://172.17.0.1:5432/mys_soccer
+    username: asdasd
+    password: asdasd
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   servlet:
     multipart:
       enabled: true

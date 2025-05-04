@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// VPS CONFIG const API_BASE_URL = "http://128.140.102.156:8080/api";
-const API_BASE_URL = "http://localhost:8080/api";
+//const API_BASE_URL = "http://128.140.102.156:8080/api";
+const API_BASE_URL = "https://api.manageyself.com/api";
 const token = sessionStorage.getItem("token");
 // **Players API**
 export const getAllPlayers = async () => {
