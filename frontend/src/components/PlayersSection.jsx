@@ -15,7 +15,7 @@ const PlayersSection = () => {
     const fetchPlayers = async () => {
       const data = await getFirstFourPlayers();
       setPlayers(data);
-      //console.log("Fetched players:", data);
+      
     };
 
     fetchPlayers();
@@ -36,14 +36,14 @@ const PlayersSection = () => {
             ))}
           </div>
 
-          {/* Animated Modal */}
+          
           <AnimatePresence>
             {selectedPlayer && (
               <PlayerModal player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
             )}
           </AnimatePresence>
 
-          {/* View All Players Button */}
+          
           <button className="view-all-players-btn" onClick={() => navigate("/players")}>
             View All Players
           </button>

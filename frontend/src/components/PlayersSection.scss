@@ -35,7 +35,7 @@
   text-align: center;
   max-width: 900px;
   margin: 0 auto;
-  padding-bottom: 30px; // Ensures space below for the button
+  padding-bottom: 30px; 
 }
 
 .players-row {
@@ -46,7 +46,7 @@
   max-width: 100%;
 
   @media (max-width: 768px) {
-    flex-direction: column; // Stack players vertically on mobile
+    flex-direction: column;
     align-items: center;
   }
 }

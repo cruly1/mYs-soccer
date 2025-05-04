@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getFirstFourNews } from "../services/api";
 import NewsCard from "./NewsCard";
-import Carousel from "../components/Carousel"; // Using existing carousel
+import Carousel from "../components/Carousel"; 
 import "./NewsSection.scss";
 
 const NewsSection = () => {
@@ -10,7 +10,6 @@ const NewsSection = () => {
   useEffect(() => {
     const fetchNews = async () => {
       const data = await getFirstFourNews();
-      //console.log("Fetched news:", data); // Debugging line to check fetched data
       setNews(data);
     };
 
@@ -21,7 +20,6 @@ const NewsSection = () => {
     <div className="news-section">
       <h2>Latest News</h2>
       <div className="reference-container">
-      {/* 🔹 Carousel Integration */}
        {news.length > 0 ? (
           <Carousel>
             {news.map((newsItem, index) => (

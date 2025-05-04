@@ -10,12 +10,12 @@ const AboutUsSection = () => {
       <h2>About Us</h2>
       
       <div className="content-wrapper">
-        {/* Image on the Left */}
+        
         <div className="owners">
           <img src={`${process.env.PUBLIC_URL}/owners.jpg`} alt="Owners" />
         </div>
 
-        {/* Text on the Right */}
+        
         <p className="about-description">
           Welcome to the world of <strong>ManageYself!</strong> Our football careers started at the same club, just a few years apart, and our friendship has remained unbroken ever since. <br /><br />
           Based on our experiences over the years, we both felt the need to create a player-focused, fair, and strong player management agency. With passion and dedication, our team works tirelessly every day to provide outstanding services to our players. <br /><br />

@@ -16,23 +16,14 @@ const LoginPage = () => {
     setError("");
 
     try {
-      // Replace with your Spring Boot endpoint
-//      const response = await axios.post("http://128.140.102.156:8080/api/auth/authenticate", {
+  
       const response = await axios.post("https://api.manageyself.com/api/auth/authenticate", {
-        username,
+      username,
         password
       });
-
-      // Assuming your backend returns { token: "jwt.token.here" }
       const token = response.data.token;
-      
-      // Store the token in localStorage
       sessionStorage.setItem("token", token);
-      //console.log("Token stored in sessionStorage:", token);
-      // Set default Authorization header for future requests
-      //axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      navigate("/admin"); // Redirect to admin panel
+      navigate("/admin");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {

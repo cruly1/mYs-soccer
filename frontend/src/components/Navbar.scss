@@ -21,7 +21,7 @@ button {
   overflow: hidden;
 
   &:hover {
-    color: #3498db; // ✅ Changes text color on hover
+    color: #3498db;
   }
 
   &::after {
@@ -41,25 +41,25 @@ button {
   }
 }
 
-/* Active Section */
+
 button.active {
-  color: #3498db; // ✅ Active section text color
+  color: #3498db;
 }
 
 button.active::after {
   width: 100%;
   left: 0;
-  background: #3498db; // ✅ Underline color for active section
+  background: #3498db;
 }
 
-/* 🔹 Mobile Menu */
+
 .menu-toggle {
   display: none;
   font-size: 28px;
   color: white;
   cursor: pointer;
 }
-/* 🔹 Responsive Navbar */
+
 @media (max-width: 768px) {
   .navbar {
   width: 95%;

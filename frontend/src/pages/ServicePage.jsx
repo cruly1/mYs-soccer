@@ -4,7 +4,6 @@ import { getExpertiseByTitle, downloadImage } from "../services/api";
 import "./ServicePage.scss";
 
 const ServicePage = () => {
-//  const API_BASE_URL = "http://128.140.102.156:8080/api";
   const API_BASE_URL = "https://api.manageyself.com/api";
   const { title } = useParams();
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const ServicePage = () => {
         if (apiService) {
           setService(apiService);
           
-          // Preload trainer images
+          
           if (apiService.trainers && apiService.trainers.length > 0) {
             const imagePromises = apiService.trainers.map(trainer => {
               if (trainer.imageName) {
@@ -44,7 +43,7 @@ const ServicePage = () => {
           setError(true);
         }
       } catch (error) {
-        //console.error("Error fetching service:", error);
+        
         setError(true);
       }
     };
@@ -66,22 +65,18 @@ const ServicePage = () => {
 
   return (
     <div className="service-page">
-      {/* Navigation Buttons */}
       <div className="background-image"></div>
       <div className="service-nav">
         <button onClick={() => navigate("/")}>Home</button>
         <button onClick={() => navigate("/services")}>Back to Services</button>
       </div>
 
-      {/* Service Title */}
       <h1>{service.title}</h1>
 
-      {/* Service Introduction */}
       <div className="service-introduction">
         <p>{service.content}</p>
       </div>
 
-      {/* Topics Section */}
       {service.study && service.study.length > 0 && (
         <div className="topics-section">
           <h2>What You'll Learn</h2>
@@ -93,7 +88,7 @@ const ServicePage = () => {
         </div>
       )}
 
-      {/* Trainers Section */}
+     
       {service.trainers && service.trainers.length > 0 && (
         <div className="trainers-section">
           <h2>Meet Our Experts</h2>

@@ -20,20 +20,19 @@ const NewsDetail = () => {
 
   return (
     <div className="news-detail">
-      {/* Navigation Buttons */}
       <div className="background-image"></div>
       <div className="news-nav">
         <button onClick={() => navigate("/")}>Home</button>
         <button onClick={() => navigate("/news")}>Back to News</button>
       </div>
 
-      {/* News Header */}
+      
       <div className="news-header">
         <h1>{news.title}</h1>
         <p className="news-date">{new Date(news.postDate).toDateString()}</p>
       </div>
 
-      {/* News Content */}
+     
       <div className="news-content">
         <p>{news.content}</p>
       </div>

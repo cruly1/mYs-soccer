@@ -5,18 +5,18 @@ import './NewsCard.scss';
 
 const NewsCard = ({ title, postDate, briefContent, imageName }) => {
   const navigate = useNavigate();
-//  const API_BASE_URL = "http://128.140.102.156:8080/api";
+
   const API_BASE_URL = "https://api.manageyself.com/api";
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // Construct the image URL
+  
   const imageUrl = imageName 
     ? `${API_BASE_URL}/images/downloadImage?fileName=${imageName}`
     : "/default_pic.png";
 
    return (
     <div className="news-card">
-      {/* Image with error handling */}
+      
       <div className="news-card__image-container">
         <img
           loading="lazy"
@@ -29,18 +29,18 @@ const NewsCard = ({ title, postDate, briefContent, imageName }) => {
           
           onError={(e) => {
             
-            e.target.onerror = null; // Prevent infinite loop if default image fails
+            e.target.onerror = null; 
           }}
         />
       </div>
 
-      {/* Content */}
+      
       <div className="news-card__content">
         <span className="news-card__date">{new Date(postDate).toLocaleDateString()}</span>
         <h3 className="news-card__title">{title}</h3>
         <p className="news-card__brief">{briefContent}</p>
 
-        {/* Read More Button */}
+       
         <button 
           className="news-card__button" 
           onClick={() => navigate(`/news/${encodeURIComponent(title)}`)}

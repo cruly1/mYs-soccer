@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./Navbar.scss";
 
 const Navbar = ({ setActiveSection }) => {
-  const [active, setActive] = useState("NEWS"); // ✅ Default active section
-  const [menuOpen, setMenuOpen] = useState(false); // ✅ Track mobile menu state
+  const [active, setActive] = useState("NEWS");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleClick = (section) => {
     setActive(section);
-    setActiveSection(section); // ✅ Set the active section globally
-    setMenuOpen(false); // ✅ Close menu after selection
+    setActiveSection(section);
+    setMenuOpen(false);
   };
 
   return (

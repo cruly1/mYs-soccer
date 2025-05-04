@@ -1,4 +1,4 @@
-/* 🔹 Main About Us Section */
+
 .about-us-section {
   padding: 30px;
   max-width: 1000px;
@@ -22,7 +22,7 @@
   padding: 0.5rem;
 }
 
-  /* 🔹 Image section */
+  
   .owners {
     flex: 1;
     display: flex;
@@ -43,7 +43,7 @@
     }
   }
 
-  /* 🔹 Description text */
+  
   .about-description {
     flex: 2;
     font-size: 17px;
@@ -53,7 +53,7 @@
     padding: 0 15px;
   }
 
-  /* 🔹 Button styling */
+  
   button {
     margin-top: 30px;
     padding: 12px 20px;
@@ -73,31 +73,31 @@
   }
 }
 
-/* 🔹 Mobile Responsive Design */
+
 @media (max-width: 768px) {
   .about-us-section .content-wrapper {
-    flex-direction: column; // ✅ Stack items on small screens
+    flex-direction: column; 
     align-items: center;
     gap: 20px;
-    max-height: 450px; // ✅ Limited height for mobile
-    overflow-y: auto; // ✅ Enable scrolling on small screens
+    max-height: 450px; 
+    overflow-y: auto;
     position: relative;
     padding-right: 10px;
   }
 
-  /* 🔹 Move text under image for better scrolling experience */
+  
   .about-description {
     font-size: 15px;
     text-align: justify;
     max-height: 250px;
-    order: 2; // ✅ Ensures text comes AFTER the image
+    order: 2; 
   }
 
   .owners {
-    order: 1; // ✅ Image stays on top
+    order: 1; 
   }
 
-  /* 🔹 Scroll Indicator */
+  
   .about-us-section .content-wrapper::after {
   
     position: absolute;
@@ -120,24 +120,24 @@
   }
 
   button {
-    width: 100%; // ✅ Full width for better touch usability
+    width: 100%; 
   }
 }
 
-/* 🔹 Custom Scrollbar Styling */
+
 .about-us-section .content-wrapper::-webkit-scrollbar {
-  width: 8px; // ✅ Thin scrollbar
+  width: 8px; 
 }
 
 .about-us-section .content-wrapper::-webkit-scrollbar-track {
-  background: transparent; // ✅ Hides track for a clean look
+  background: transparent; 
 }
 
 .about-us-section .content-wrapper::-webkit-scrollbar-thumb {
-  background: #2980b9; // ✅ Scrollbar color matches theme
-  border-radius: 10px; // ✅ Rounded edges
+  background: #2980b9; 
+  border-radius: 10px; 
 }
 
 .about-us-section .content-wrapper::-webkit-scrollbar-thumb:hover {
-  background: #3498db; // ✅ Slight color change on hover
+  background: #3498db; 
 }

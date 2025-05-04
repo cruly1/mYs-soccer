@@ -18,14 +18,15 @@ import {
   deleteTrainer,
   createStudies,
   uploadImageForNews,
+  uploadImageForExpertise,
   uploadImageForPlayer,
   uploadImageForTrainer,
   downloadImage,
-} from "../services/api"; // We'll create these API functions next
+} from "../services/api";
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
-//  const API_BASE_URL = "http://128.140.102.156:8080/api";
+
   const API_BASE_URL = "https://api.manageyself.com/api";
   const navigate = useNavigate();
   const [player, setPlayer] = useState({
@@ -35,7 +36,7 @@ const AdminDashboard = () => {
   heightInCm: "",
   weightInKg: "",
   slogan: "",
-  leg: "RIGHT", // or "LEFT"
+  leg: "RIGHT",
   team: "",
   position: "CSATAR",
 });
@@ -48,23 +49,26 @@ const AdminDashboard = () => {
   const [expertise, setExpertise] = useState({ title: "", briefContent: "", content: "" });
   const [editingExpertise, setEditingExpertise] = useState(null);
   const [trainer, setTrainer] = useState({ name: "", briefContent: "" });
-  const [selectedExpertise, setSelectedExpertise] = useState(""); // For trainer assignment
+  const [selectedExpertise, setSelectedExpertise] = useState("");
   const [newService, setNewService] = useState({
   title: "",
   briefContent: "",
   content: "",
   studies: [],
 });
-const [studyInput, setStudyInput] = useState(""); // For individual study inputs
-const [playerImage, setPlayerImage] = useState(null); // For player image upload
-const [newsImage, setNewsImage] = useState(null); // For news image upload
+const [studyInput, setStudyInput] = useState(""); 
+const [playerImage, setPlayerImage] = useState(null); 
+const [newsImage, setNewsImage] = useState(null); 
 const [playerImages, setPlayerImages] = useState({});
 const [newsImages, setNewsImages] = useState({});
-const [selectedEntityType, setSelectedEntityType] = useState('player'); // 'player' or 'news'
+const [serviceImage, setServiceImage] = useState(null);
+
+const [selectedEntityType, setSelectedEntityType] = useState('player'); 
 const [selectedEntityId, setSelectedEntityId] = useState('');
 const [entityImage, setEntityImage] = useState(null);
 const [availablePlayers, setAvailablePlayers] = useState([]);
 const [availableNews, setAvailableNews] = useState([]);
+const [availableServices, setAvailableServices] = useState([]);
 const [availableTrainers, setAvailableTrainers] = useState([]);
 
 useEffect(() => {
@@ -78,10 +82,10 @@ useEffect(() => {
   }
 }, []);  
 
-  // Handle adding a player
+  
    const handleAddPlayer = async () => {
   try {
-    const createdPlayer = await addPlayer(player); // `player` now includes the new fields
+    const createdPlayer = await addPlayer(player);
 
     if (playerImage) {
       try {
@@ -94,7 +98,7 @@ useEffect(() => {
       }
     }
 
-    // Reset form after successful creation
+    
     setPlayer({
       name: "",
       dateOfBirth: "",
@@ -113,19 +117,19 @@ useEffect(() => {
 };
 
 
-  // Handle adding news
+  
   const handleAddNews = async () => {
     try {
-      // First create the news
+      
       const createdNews = await addNews(news);
       toast.success('News created successfully!');
 
-      // Then upload image if provided
+      
       if (newsImage) {
         try {
           const updatedNews = await uploadImageForNews(createdNews.title, newsImage);
           
-          // Update local state with the image info
+          
           setSomethingNews(prev => prev.map(n => 
             n.title === createdNews.title ? updatedNews : n
           ));
@@ -134,23 +138,23 @@ useEffect(() => {
         }
       }
 
-      // Reset form
+      
       setNews({ title: "", postDate: "", briefContent: "", content: "" });
       setNewsImage(null);
     } catch (error) {
       toast.error('Failed to create news');
-      //console.error('Error adding news:', error);
+      
     }
   };
 
-// Handle player image change
+
   const handlePlayerImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setPlayerImage(e.target.files[0]);
     }
   };
 
-  // Handle news image change
+  
   const handleNewsImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setNewsImage(e.target.files[0]);
@@ -159,7 +163,7 @@ useEffect(() => {
   const filterEntitiesWithoutImages = (entities, entityType) => {
   return entities.filter(entity => {
     if (entityType === 'trainer') {
-      return !entity.imageName && entity.name; // Check for trainer specific properties
+      return !entity.imageName && entity.name;
     }
     return !entity.imageName;
   });
@@ -168,14 +172,18 @@ useEffect(() => {
 useEffect(() => {
   setAvailablePlayers(filterEntitiesWithoutImages(players, 'player'));
   setAvailableNews(filterEntitiesWithoutImages(somethingNews, 'news'));
+  setAvailableServices(filterEntitiesWithoutImages(expertiseList, 'services')); 
   
-  // Get all trainers from expertiseList
+  
   const allTrainers = expertiseList.flatMap(exp => 
-    exp.trainers.map(trainer => ({ 
-      ...trainer, 
-      expertiseTitle: exp.title 
-    }))
+    exp.trainers && Array.isArray(exp.trainers) 
+      ? exp.trainers.map(trainer => ({ 
+          ...trainer, 
+          expertiseTitle: exp.title 
+        }))
+      : [] 
   );
+  
   setAvailableTrainers(filterEntitiesWithoutImages(allTrainers, 'trainer'));
 }, [players, somethingNews, expertiseList]);
 
@@ -210,13 +218,22 @@ const handleImageUpload = async () => {
         ));
         
       }
+    } else if (selectedEntityType === 'services') {
+      const serviceItem = expertiseList.find(s => s.title === selectedEntityId);
+      if (serviceItem) {
+        const updatedService = await uploadImageForExpertise(serviceItem.title, entityImage);
+        setExpertiseList(prev => prev.map(s => 
+          s.title === serviceItem.title ? updatedService : s
+        ));
+        toast.success('Service image uploaded successfully!');
+      }
     }
     else if (selectedEntityType === 'trainer') {
       const trainer = availableTrainers.find(t => t.name === selectedEntityId);
       if (trainer) {
         const updatedTrainer = await uploadImageForTrainer(trainer.name, entityImage);
         
-        // Update the trainer in the expertiseList
+        
         setExpertiseList(prev => prev.map(exp => {
           if (exp.title === trainer.expertiseTitle) {
             return {
@@ -233,12 +250,12 @@ const handleImageUpload = async () => {
       }
     }
 
-    // Reset form
+    
     setEntityImage(null);
     setSelectedEntityId('');
   } catch (error) {
     toast.error('Failed to upload image');
-    //console.error('Error uploading image:', error);
+    
   }
 };
 
@@ -250,7 +267,7 @@ const handleImageUpload = async () => {
         setImageState(prev => ({ ...prev, [fileName]: imageUrl }));
       }
     } catch (error) {
-      //console.error('Error fetching image:', error);
+      
     }
   };
 
@@ -258,7 +275,6 @@ const handleImageUpload = async () => {
     const data = await getAllPlayers();
     setPlayers(data);
     
-    // Fetch images for players
     data.forEach(player => {
       if (player.imageFileName) {
         fetchImage(player.imageFileName, setPlayerImages);
@@ -271,7 +287,7 @@ const handleImageUpload = async () => {
     const data = await getAllNews();
     setSomethingNews(data);
     
-    // Fetch images for news
+    
     data.forEach(newsItem => {
       if (newsItem.imageFileName) {
         fetchImage(newsItem.imageFileName, setNewsImages);
@@ -289,13 +305,13 @@ useEffect(() => {
   const handleDeletePlayer = async (name) => {
     await deletePlayer(name);
     
-    fetchPlayers(); // Refresh the list
+    fetchPlayers();
   };
 
   const handleDeleteNews = async (title) => {
     await deleteNews(title);
     
-    fetchNews(); // Refresh the list
+    fetchNews(); 
   };
 
   
@@ -304,9 +320,9 @@ useEffect(() => {
   const handleUpdatePlayer = async () => {
   if (editingPlayer) {
     try {
-      await updatePlayer(editingPlayer.originalName, editingPlayer); // ✅ Send original name
+      await updatePlayer(editingPlayer.originalName, editingPlayer);
       setEditingPlayer(null);
-      fetchPlayers(); // ✅ Refresh only after saving, not while typing
+      fetchPlayers(); 
     } catch (error) {
       toast.error("Error updating player. Please try again.");
     }
@@ -316,10 +332,10 @@ useEffect(() => {
 const handleUpdateNews = async () => {
   if (editingNews) {
     try {
-      await updateNews(editingNews.originalTitle, editingNews); // ✅ Send original title
+      await updateNews(editingNews.originalTitle, editingNews);
       setEditingNews(null);
       
-      fetchNews(); // ✅ Refresh only after saving, not while typing
+      fetchNews(); 
     } catch (error) {
       
       
@@ -329,16 +345,16 @@ const handleUpdateNews = async () => {
 
 
 const handleEditPlayer = (player) => {
-  setEditingPlayer({ ...player, originalName: player.name }); // ✅ Stores original name
+  setEditingPlayer({ ...player, originalName: player.name }); 
 };
 
 const handleEditNews = (newsItem) => {
-  setEditingNews({ ...newsItem, originalTitle: newsItem.title }); // ✅ Stores original title
+  setEditingNews({ ...newsItem, originalTitle: newsItem.title });
 };
 
    const fetchExpertise = async () => {
     const data = await getAllExpertise();
-    //console.log(data);
+    
     setExpertiseList(data);
   };
 
@@ -353,8 +369,8 @@ const handleEditNews = (newsItem) => {
     try {
       await updateExpertise(editingExpertise.originalTitle, {
         title: editingExpertise.title,
-        briefContent: editingExpertise.briefContent, // ✅ Send correct `briefContent`
-        content: editingExpertise.content, // ✅ Send correct `content`
+        briefContent: editingExpertise.briefContent, 
+        content: editingExpertise.content,
       });
 
       setEditingExpertise(null);
@@ -362,7 +378,7 @@ const handleEditNews = (newsItem) => {
       fetchExpertise();
       
     } catch (error) {
-      //console.error("Error updating expertise:", error);
+      
       
     }
   }
@@ -393,35 +409,62 @@ const handleEditNews = (newsItem) => {
   };
 
   const handleEditExpertise = (exp) => {
-  //console.log("Editing Expertise Before Setting:", exp); // ✅ Check what data we are setting
+  
 
   setEditingExpertise({
     ...exp,
     originalTitle: exp.title, 
-    briefContent: exp.briefContent || "", // ✅ Ensure values are correct
-    content: exp.content || "", // ✅ Ensure values are correct
+    briefContent: exp.briefContent || "",
+    content: exp.content || "", 
   });
+};
+
+
+const handleServiceImageChange = (e) => {
+  if (e.target.files && e.target.files[0]) {
+    setServiceImage(e.target.files[0]);
+  }
 };
 
 
 const handleAddService = async () => {
   try {
-    // Step 1: Create the service
+    
     const createdService = await createExpertise({
       title: newService.title,
       briefContent: newService.briefContent,
       content: newService.content,
     });
+    
+    toast.success('Service created successfully!');
 
-    // Step 2: If the service is created and studies exist, add them
+    
     if (createdService && newService.studies.length > 0) {
       await createStudies(newService.title, newService.studies);
     }
     
-    fetchExpertise(); // Refresh the list
-    setNewService({ title: "", briefContent: "", content: "", studies: [] }); // Reset form
-    setStudyInput(""); // Reset study input
+    
+    if (serviceImage) {
+      try {
+        const updatedService = await uploadImageForExpertise(createdService.title, serviceImage);
+        
+        
+        setExpertiseList(prev => prev.map(s => 
+          s.title === createdService.title ? updatedService : s
+        ));
+        
+        toast.success('Service image uploaded successfully!');
+      } catch (uploadError) {
+        toast.warning('Service created but image upload failed');
+      }
+    }
+
+    fetchExpertise();
+    setNewService({ title: "", briefContent: "", content: "", studies: [] });
+    setStudyInput("");
+    setServiceImage(null);
   } catch (error) {
+    toast.error('Failed to create service');
   }
 };
 
@@ -430,9 +473,9 @@ useEffect(() => {
     fetchNews();
     fetchExpertise();
   }, []);
-  // Check if user is authenticated
+  
   if (!sessionStorage.getItem("token")) {
-    navigate("/"); // Redirect if not logged in
+    navigate("/");
     return null;
   }
 
@@ -536,26 +579,26 @@ return (
     <button onClick={() => {
       if (studyInput.trim() !== "") {
         setNewService({ ...newService, studies: [...newService.studies, studyInput] });
-        setStudyInput(""); // Reset input field
+        setStudyInput(""); 
       }
     }}>
       Add Study
     </button>
   </div>
 
-  {/* Show Added Studies */}
+  
   <ul>
     {newService.studies.map((study, index) => (
       <li key={index}>{study}</li>
     ))}
   </ul>
 
-  {/* Create Service Button (Now adds studies too) */}
+  
   <button onClick={handleAddService}>Create Service</button>
 </div>
 
 
-      {/* Add Trainer */}
+      
       <div className="form-section">
         <h3>Add Trainer</h3>
         <select onChange={(e) => setSelectedExpertise(e.target.value)}>
@@ -583,21 +626,24 @@ return (
         >
           <option value="player">Player</option>
           <option value="news">News</option>
+          <option value="services">Service</option>
           <option value="trainer">Trainer</option>
         </select>
       </div>
       
       <div className="form-row">
         <label>
-          {selectedEntityType === 'player' ? 'Select Player' : 
-       selectedEntityType === 'news' ? 'Select News' : 'Select Trainer'}:
-        </label>
+      {selectedEntityType === 'player' ? 'Select Player' : 
+       selectedEntityType === 'news' ? 'Select News' : 
+       selectedEntityType === 'services' ? 'Select Service' : 'Select Trainer'}:
+    </label>
         <select
           value={selectedEntityId}
           onChange={(e) => setSelectedEntityId(e.target.value)}
           disabled={
         (selectedEntityType === 'player' && availablePlayers.length === 0) ||
         (selectedEntityType === 'news' && availableNews.length === 0) ||
+        (selectedEntityType === 'services' && availableServices.length === 0) ||
         (selectedEntityType === 'trainer' && availableTrainers.length === 0)
       }
     >
@@ -614,6 +660,12 @@ return (
                 {newsItem.title}
               </option>
             ))
+         : selectedEntityType === 'services'
+            ? availableServices.map(service => (
+                <option key={service.title} value={service.title}>
+                  {service.title}
+                </option>
+              ))   
           : availableTrainers.map(trainer => (
               <option 
                 key={`${trainer.expertiseTitle}-${trainer.name}`} 
@@ -629,6 +681,9 @@ return (
         )}
         {(selectedEntityType === 'news' && availableNews.length === 0) && (
           <p className="info-text">All news items already have images</p>
+        )}
+        {(selectedEntityType === 'services' && availableServices.length === 0) && (
+          <p className="info-text">All services already have images</p>
         )}
         {selectedEntityType === 'trainer' && availableTrainers.length === 0 && (
           <p className="info-text">All trainers already have images</p>
@@ -656,7 +711,7 @@ return (
   </div>
 
 
-      {/* Players Management */}
+      
     <div className="management-section">
     <h3>Manage Players</h3>
     {players.map((player, index) => (
@@ -750,12 +805,12 @@ return (
 
 
 
-      {/* News Management */}
+      
     <div className="management-section">
       <h3>Manage News</h3>
       {somethingNews.map((newsItem, index) => (
         <div key={index} className="admin-item">
-          {editingNews && editingNews.originalTitle === newsItem.title ? ( // ✅ Compare with stored original title
+          {editingNews && editingNews.originalTitle === newsItem.title ? ( 
             <>
               <input
                 type="text"
@@ -787,7 +842,7 @@ return (
                     alt={newsItem.title}
                     className="news-thumbnail"
                     onError={(e) => {
-                      e.target.style.display = 'none'; // Hide if image fails to load
+                      e.target.style.display = 'none'; 
                     }}
                   />
                 )}
@@ -804,7 +859,7 @@ return (
   <h3>Manage Services</h3>
   {expertiseList.map((exp, index) => (
     <div key={index} className="admin-item">
-      {editingExpertise && editingExpertise.originalTitle === exp.title ? ( // ✅ Track by original title
+      {editingExpertise && editingExpertise.originalTitle === exp.title ? ( 
         <>
           <input
             type="text"
@@ -820,7 +875,7 @@ return (
             onChange={(e) => setEditingExpertise({ ...editingExpertise, content: e.target.value })}
           ></textarea>
 
-          {/* Display Trainers */}
+          
           <div className="trainers-list">
             <h4>Assigned Trainers:</h4>
             {editingExpertise.trainers && editingExpertise.trainers.length > 0 ? (
@@ -838,6 +893,16 @@ return (
       ) : (
         <>
           <div className="expertise-info">
+          {exp.imageName && (
+              <img 
+                src={`${API_BASE_URL}/images/downloadImage?fileName=${exp.imageName}`}
+                alt={exp.title}
+                className="service-thumbnail"
+                onError={(e) => {
+                  e.target.style.display = 'none'; 
+                }}
+              />
+            )}
           <span><strong>{exp.title}</strong> - <strong>{exp.briefContent}</strong></span>
           </div>
           <button onClick={() => handleEditExpertise(exp)}>Edit</button>
@@ -849,24 +914,34 @@ return (
   ))}
 </div>
 
-      {/* Manage Trainers */}
-      <h3>Manage Trainers</h3>
-      {expertiseList.map((exp) => (
-        <div key={exp.title} className="admin-trainer-section">
-          {exp.trainers.length > 0 ? (
-            exp.trainers.map((trainer) => (
-              <div key={trainer.name} className="admin-item">
-                <div className="trainer-info">
-                  <span><strong>{trainer.name}</strong> - <strong>{trainer.briefContent}</strong></span>
-                </div>
-                <button className="delete-btn" onClick={() => handleDeleteTrainer(exp.title, trainer.name)}>Delete</button>
-              </div>
-            ))
-          ) : (
-            <p>No trainers assigned yet.</p>
-          )}
+      
+<h3>Manage Trainers</h3>
+{expertiseList.map((exp) => (
+  <div key={exp.title} className="admin-trainer-section">
+    {exp.trainers && Array.isArray(exp.trainers) && exp.trainers.length > 0 ? (
+      exp.trainers.map((trainer) => (
+        <div key={trainer.name} className="admin-item">
+          <div className="trainer-info">
+            {trainer.imageName && (
+              <img 
+                src={`${API_BASE_URL}/images/downloadImage?fileName=${trainer.imageName}`}
+                alt={trainer.name}
+                className="trainer-thumbnail"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            )}
+            <span><strong>{trainer.name}</strong> - <strong>{trainer.briefContent}</strong></span>
+          </div>
+          <button className="delete-btn" onClick={() => handleDeleteTrainer(exp.title, trainer.name)}>Delete</button>
         </div>
-      ))}
+      ))
+    ) : (
+      <p>No trainers assigned yet.</p>
+    )}
+  </div>
+))}
 
 
       <button className="logout-btn" onClick={() => { sessionStorage.removeItem("token"); localStorage.removeItem("hasReloaded"); navigate("/"); }}>

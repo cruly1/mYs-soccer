@@ -13,7 +13,7 @@ import ServicePage from "./pages/ServicePage";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import NewsDetail from "./pages/NewsDetail";
-import "./App.css"; // Import your global styles here
+import "./App.css";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -26,7 +26,7 @@ const AnimatedRoutes = () => {
         <Route path="/news" element={<News />} />
         <Route path="/news/:title" element={<NewsDetail />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/services/:title" element={<ServicePage />} /> {/* ✅ Dynamic Service Route */}
+        <Route path="/services/:title" element={<ServicePage />} /> 
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/owners" element={<Owners />} />
         <Route path="/players" element={<PlayersPage />} />

@@ -5,7 +5,7 @@ import PlayersSection from "../components/PlayersSection";
 import ServicesSection from "../components/ServicesSection";
 import AboutUsSection from "../components/AboutUsSection";
 import ContactSection from "../components/ContactSection";
-import Footer from "../components/Footer"; // Import Footer
+import Footer from "../components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Home.scss";
 
@@ -14,18 +14,17 @@ const Home = () => {
   const [activeSection, setActiveSection] = useState("NEWS");
   const contentRef = useRef(null);
 
-  // Automatically scroll to content on first load
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (contentRef.current) {
         contentRef.current.scrollIntoView({ behavior: "smooth" });
       }
-    }, 1000); // Delay to ensure page loads smoothly
+    }, 1000); 
 
-    return () => clearTimeout(timeout); // Cleanup timeout on unmount
+    return () => clearTimeout(timeout); 
   }, []);
 
-  // Handle scroll for background blur effect
+  
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -37,7 +36,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* Background with blur effect */}
+     
       <div
         className="background-image"
         style={{
@@ -47,13 +46,13 @@ const Home = () => {
         }}
       ></div>
 
-      {/* Welcome Text */}
+     
       <div className="welcome-text">
         <h1>Welcome to ManageYself</h1>
         <p>Take your destiny into your own hands!</p>
       </div>
 
-      {/* Main Content Section (scroll target) */}
+      
       <div className="main-content" ref={contentRef}>
         <Navbar setActiveSection={setActiveSection} />
 
@@ -118,7 +117,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Footer */}
+      
       <Footer />
     </div>
   );
