@@ -46,4 +46,11 @@ public class ImageController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImage);
     }
+
+    @PostMapping("/uploadImageForExpertise")
+    public ResponseEntity<?> uploadImageForExpertise(@RequestParam("image") MultipartFile file, @RequestParam("expertise") String expertise) throws IOException {
+        String uploadImage = imageService.uploadImageForExpertise(file, expertise);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadImage);
+    }
 }
