@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getExpertiseByTitle, downloadImage } from "../services/api";
+import { API_BASE_URL } from "../services/config.js";
 import "./ServicePage.scss";
 
 const ServicePage = () => {
-  const API_BASE_URL = "https://api.manageyself.com/api";
   const { title } = useParams();
   const navigate = useNavigate();
   const [service, setService] = useState(null);

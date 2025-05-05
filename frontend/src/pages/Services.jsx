@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { getAllExpertise } from "../services/api";
+import { API_BASE_URL } from "../services/config.js";
 import "./Services.scss";
-
-const API_BASE_URL = "https://api.manageyself.com/api"; 
-
+ 
 const Services = () => {
   const navigate = useNavigate();
   const [services, setServices] = useState([]);

@@ -1,9 +1,13 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "./config.js";
 
 
-const API_BASE_URL = "https://api.manageyself.com/api";
+
+//const API_BASE_URL = "https://api.manageyself.com/api";
 const token = sessionStorage.getItem("token");
+
+
 
 export const getAllPlayers = async () => {
   try {

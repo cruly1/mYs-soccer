@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../services/config.js";
 import axios from "axios";
 import "./LoginPage.scss";
 
@@ -17,7 +18,7 @@ const LoginPage = () => {
 
     try {
   
-      const response = await axios.post("https://api.manageyself.com/api/auth/authenticate", {
+      const response = await axios.post(`${API_BASE_URL}/auth/authenticate`, {
       username,
         password
       });

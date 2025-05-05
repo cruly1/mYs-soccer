@@ -1,9 +1,8 @@
 import React, { useState } from "react";
+import { API_BASE_URL } from "../services/config.js";
 import "./PlayerModal.scss";
 
 const PlayerModal = ({ player, onClose }) => {
-
-  const API_BASE_URL = "https://api.manageyself.com/api";
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 

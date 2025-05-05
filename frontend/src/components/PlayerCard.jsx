@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import { API_BASE_URL } from "../services/config.js";
 import "./PlayerCard.scss";
 
-const PlayerCard = ({ name, imageName, position, club, onClick }) => {
-  const API_BASE_URL = "https://api.manageyself.com/api";
+const PlayerCard = ({ name, imageName, team, club, onClick }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -29,7 +29,7 @@ const PlayerCard = ({ name, imageName, position, club, onClick }) => {
       </div>
       <div className="player-card__text-wrapper">
         <h2 className="player-card__name">{name}</h2>
-        <p className="player-card__position">{position}</p>
+        <p className="player-card__position">{team}</p>
         <p className="player-card__club">{club}</p>
       </div>
     </div>

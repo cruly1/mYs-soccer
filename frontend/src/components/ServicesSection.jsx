@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllExpertise } from "../services/api";
+import { API_BASE_URL } from "../services/config.js";
 import "./ServicesSection.scss";
 
 const ServicesSection = () => {
-  const API_BASE_URL = "https://api.manageyself.com/api";
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [imageStatus, setImageStatus] = useState({});

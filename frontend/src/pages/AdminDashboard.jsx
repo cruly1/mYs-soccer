@@ -23,11 +23,11 @@ import {
   uploadImageForTrainer,
   downloadImage,
 } from "../services/api";
+import { API_BASE_URL } from "../services/config.js";
 import "./AdminDashboard.scss";
 
 const AdminDashboard = () => {
 
-  const API_BASE_URL = "https://api.manageyself.com/api";
   const navigate = useNavigate();
   const [player, setPlayer] = useState({
   name: "",

@@ -1,12 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from "../services/config.js";
 import './NewsCard.scss';
 
 const NewsCard = ({ title, postDate, briefContent, imageName }) => {
   const navigate = useNavigate();
-
-  const API_BASE_URL = "https://api.manageyself.com/api";
   const [imageLoaded, setImageLoaded] = useState(false);
 
   
