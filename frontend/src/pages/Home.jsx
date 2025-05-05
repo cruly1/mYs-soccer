@@ -14,15 +14,40 @@ const Home = () => {
   const [activeSection, setActiveSection] = useState("NEWS");
   const contentRef = useRef(null);
 
+  const smoothScrollTo = (targetY, duration = 2000) => {
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const startTime = performance.now();
+
+    const step = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeInOut = progress < 0.5
+        ? 2 * progress * progress
+        : -1 + (4 - 2 * progress) * progress;
+
+      window.scrollTo(0, startY + distance * easeInOut);
+
+      if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+
+      requestAnimationFrame(step);
+  };
+
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (contentRef.current) {
-        contentRef.current.scrollIntoView({ behavior: "smooth" });
+        const targetY = contentRef.current.getBoundingClientRect().top + window.scrollY;
+        smoothScrollTo(targetY, 2500);
       }
-    }, 1000); 
+    }, 1000);
 
-    return () => clearTimeout(timeout); 
+    return () => clearTimeout(timeout);
   }, []);
+
 
   
   useEffect(() => {
