@@ -59,6 +59,7 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  
   return (
     <div className="home">
      
