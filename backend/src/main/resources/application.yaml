@@ -3,8 +3,8 @@ spring:
     name: manageyself-soccer
   datasource:
     url: jdbc:postgresql://172.17.0.1:5432/mys_soccer
-    username: asdasd
-    password: asdasd
+    username: asd
+    password: asd
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

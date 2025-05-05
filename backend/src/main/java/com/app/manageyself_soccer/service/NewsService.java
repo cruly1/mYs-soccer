@@ -1,9 +1,12 @@
 package com.app.manageyself_soccer.service;
 
+import com.app.manageyself_soccer.dao.ImageRepository;
 import com.app.manageyself_soccer.dao.NewsRepository;
 import com.app.manageyself_soccer.dto.NewsDTO;
+import com.app.manageyself_soccer.exception.customexceptions.ImageNotFoundException;
 import com.app.manageyself_soccer.exception.customexceptions.NewsNotFoundException;
 import com.app.manageyself_soccer.mapper.NewsMapper;
+import com.app.manageyself_soccer.model.Image;
 import com.app.manageyself_soccer.model.News;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ public class NewsService {
 
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
+    private final ImageRepository imageRepository;
 
     private static final String newsNotFound = "News not found.";
 
@@ -51,6 +55,14 @@ public class NewsService {
         news.setBriefContent(newsDTO.getBriefContent());
         news.setContent(newsDTO.getContent());
 
+        if (news.getImageName() != null) {
+            Image image = imageRepository.findByName(news.getImageName())
+                    .orElseThrow(() -> new ImageNotFoundException("Image not found."));
+            image.setName(news.getTitle());
+            news.setImageName(image.getName());
+            imageRepository.save(image);
+        }
+
         newsRepository.save(news);
 
         return newsDTO;
@@ -59,6 +71,12 @@ public class NewsService {
     public String deleteNews(String title) {
         News news = newsRepository.findByTitle(title)
                 .orElseThrow(() -> new NewsNotFoundException(newsNotFound));
+
+        if (news.getImageName() != null) {
+            Image image = imageRepository.findByName(news.getImageName())
+                    .orElseThrow(() -> new ImageNotFoundException("Image not found."));
+            imageRepository.deleteById(image.getId());
+        }
 
         newsRepository.delete(news);
 

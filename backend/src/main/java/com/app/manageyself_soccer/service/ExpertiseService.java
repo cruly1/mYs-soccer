@@ -1,14 +1,17 @@
 package com.app.manageyself_soccer.service;
 
 import com.app.manageyself_soccer.dao.ExpertiseRepository;
+import com.app.manageyself_soccer.dao.ImageRepository;
 import com.app.manageyself_soccer.dao.TrainerRepository;
 import com.app.manageyself_soccer.dto.ExpertiseDTO;
 import com.app.manageyself_soccer.dto.TrainerDTO;
 import com.app.manageyself_soccer.exception.customexceptions.ExpertiseNotFoundException;
+import com.app.manageyself_soccer.exception.customexceptions.ImageNotFoundException;
 import com.app.manageyself_soccer.exception.customexceptions.TrainerNotFoundException;
 import com.app.manageyself_soccer.mapper.ExpertiseMapper;
 import com.app.manageyself_soccer.mapper.TrainerMapper;
 import com.app.manageyself_soccer.model.Expertise;
+import com.app.manageyself_soccer.model.Image;
 import com.app.manageyself_soccer.model.Trainer;
 import com.app.manageyself_soccer.payload.CreateStudiesRequest;
 import com.app.manageyself_soccer.payload.DeleteStudyRequest;
@@ -28,6 +31,7 @@ public class ExpertiseService {
     private final ExpertiseMapper expertiseMapper;
     private final TrainerRepository trainerRepository;
     private final TrainerMapper trainerMapper;
+    private final ImageRepository imageRepository;
 
     public ExpertiseDTO getExpertiseByTitle(String title) {
         Expertise expertise = expertiseRepository.findByTitle(title)
@@ -87,8 +91,14 @@ public class ExpertiseService {
         expertise.setBriefContent(expertiseDTO.getBriefContent());
         expertise.setContent(expertiseDTO.getContent());
         expertise.setStudy(expertiseDTO.getStudy());
-        expertise.setImageName(expertiseDTO.getImageName());
-        expertise.setImageName(expertiseDTO.getImageType());
+
+        if (expertise.getImageName() != null) {
+            Image image = imageRepository.findByName(expertise.getImageName())
+                    .orElseThrow(() -> new ImageNotFoundException("Image not found."));
+            image.setName(expertiseDTO.getImageName());
+            expertise.setImageName(expertiseDTO.getImageName());
+            imageRepository.save(image);
+        }
 
         expertiseRepository.save(expertise);
 
@@ -98,6 +108,12 @@ public class ExpertiseService {
     public String deleteExpertise(String title) {
         Expertise expertise = expertiseRepository.findByTitle(title)
                 .orElseThrow(() -> new ExpertiseNotFoundException("Expertise not found."));
+
+        if (expertise.getImageName() != null) {
+            Image image = imageRepository.findByName(expertise.getImageName())
+                    .orElseThrow(() -> new ImageNotFoundException("Image not found."));
+            imageRepository.deleteById(image.getId());
+        }
 
         expertiseRepository.delete(expertise);
 
@@ -111,6 +127,12 @@ public class ExpertiseService {
 
         Trainer trainer = trainerRepository.findByName(name)
                 .orElseThrow(() -> new TrainerNotFoundException("Trainer not found."));
+
+        if (trainer.getImageName() != null) {
+            Image image = imageRepository.findByName(trainer.getImageName())
+                    .orElseThrow(() -> new ImageNotFoundException("Image not found."));
+            imageRepository.deleteById(image.getId());
+        }
 
         expertise.getTrainers().remove(trainer);
         trainerRepository.deleteByName(name);
