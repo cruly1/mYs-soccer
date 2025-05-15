@@ -7,7 +7,7 @@
   background-color: #fff;
 }
 button.active::after{
-  background: none;
+  background: none !important;
 }
 
 .owner-tabs {

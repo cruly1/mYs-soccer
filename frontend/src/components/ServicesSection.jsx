@@ -72,6 +72,15 @@ const ServicesSection = () => {
                   </div>
                   <h3>{service.title || "Unnamed Service"}</h3>
                   <p>{service.briefContent || "No description available."}</p>
+                  <button
+                    onClick={() =>
+                      navigate(
+                        `/services/${service.title.replace(/\s+/g, "%20")}`
+                      )
+                    }
+                  >
+                    Learn More
+                  </button>
                 </div>
               );
             })}

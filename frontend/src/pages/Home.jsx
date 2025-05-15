@@ -75,9 +75,9 @@ const Home = () => {
      
       <div className="welcome-text">
         <h1>Welcome to ManageYself</h1>
-        <p>Take your destiny into your own hands!</p>
+        
       </div>
-
+      <p className="motto">Take your destiny into your own hands!</p>
       
       <div className="main-content" ref={contentRef}>
         <Navbar setActiveSection={setActiveSection} />

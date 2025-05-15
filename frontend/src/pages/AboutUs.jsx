@@ -53,7 +53,7 @@ const owners = [
         </p>
       </>
     ),
-    accentColor: "#3498db", 
+    accentColor: "#FF8DA1", 
   },
   {
     id: "marko",
@@ -62,23 +62,23 @@ const owners = [
     description: (
       <>
         <strong>Hello everyone,</strong><br /><br />
-        My name is Márkó Futács, a former professional football player who spent more than a decade playing for both domestic and international teams. Throughout my career, I had the privilege of competing in prestigious European leagues such as:<br />
+        My name is Márkó Futács, a former professional football player who spent more than a decade playing for both domestic and international teams. Throughout my career, I had the privilege of competing in prestigious <strong>European leagues such as:</strong><br />
         - The Championship (England)<br />
         - The Bundesliga (Germany)<br />
         - The Süper Lig (Turkey)<br />
         - The Croatian First Division<br /><br />
         
-        These experiences allowed me to gain invaluable insights on both local and international levels, learning about diverse cultures, football philosophies, and training methodologies. Now, I am committed to sharing this knowledge with the next generation of talented players.<br /><br />
+        These experiences allowed me to gain invaluable insights on both local and international levels, learning about <strong>diverse cultures, football philosophies, and training methodologies</strong>. Now, I am committed to sharing this knowledge with the next generation of talented players.<br /><br />
         
         <strong>My Mission</strong><br />
-        My goal is to help young players embark on the right path and support them in developing their careers. I understand the challenges of building an international career and therefore place great emphasis on providing personalized guidance to each player. Whether pursuing opportunities in domestic clubs or abroad, my focus is on ensuring the best possible conditions for their success.<br /><br />
+        My goal is <strong>to help young players embark on the right path and support them in developing their careers</strong>. I understand the challenges of building an international career and therefore place great emphasis on providing personalized guidance to each player. Whether pursuing opportunities in domestic clubs or abroad, my focus is on ensuring the best possible conditions for their success.<br /><br />
         
         <strong>Why Join Us?</strong><br />
-        I know exactly how it feels to be a young player stepping into the world of football—I've been in your shoes. During my career, I traveled across various countries, encountered different styles and cultures, and learned just how crucial proper guidance and support are for an athlete's success.<br /><br />
+        I know exactly how it feels to be a young player stepping into the world of football—I've been in your shoes. During my career, I traveled across various countries, encountered different styles and cultures, and <strong>learned just how crucial proper guidance and support are for an athlete's success.</strong><br /><br />
         
         The international football market is dynamic and full of opportunities, but achieving true success requires more than just talent—it takes professional backing to open the doors that lead to the pinnacle of your career.<br /><br />
         
-        With us, you won't just be another name on a list. You'll receive:<br />
+        <strong>With us, you won't just be another name on a list. You'll receive:</strong><br />
         - Personalized attention and guidance<br />
         - Support in securing your first professional contract<br />
         - Assistance navigating transfers<br />
@@ -86,12 +86,12 @@ const owners = [
         
         Leveraging our extensive international network, we'll ensure you have access to the best opportunities and help you confidently navigate the global football stage.<br /><br />
         
-        I understand how challenging it can be to adapt to a foreign country and a new language. My goal is to make your career transition as smooth and successful as possible.<br /><br />
+        I understand how challenging it can be to adapt to a foreign country and a new language. My goal is to <strong>make your career transition as smooth and successful as possible</strong>.<br /><br />
         
         <strong>Join us, and let's work together to achieve your goals, whether that's with a domestic club or anywhere else in the world!</strong>
       </>
     ),
-    accentColor: "#2ecc71", 
+    accentColor: "#3498db", 
   },
   
 ];

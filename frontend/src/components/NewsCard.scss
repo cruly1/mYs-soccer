@@ -1,7 +1,7 @@
 .news-card {
   width: 100%;
   max-width: 400px;
-  background: white;
+  background: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -28,7 +28,7 @@
 
 .news-card__date {
   font-size: 14px;
-  color: gray;
+  color: white;
   display: block;
   margin-bottom: 8px;
 }
@@ -37,12 +37,12 @@
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: white;
 }
 
 .news-card__brief {
   font-size: 16px;
-  color: #666;
+  color: white;
   line-height: 1.5;
   margin-bottom: 15px;
 }
