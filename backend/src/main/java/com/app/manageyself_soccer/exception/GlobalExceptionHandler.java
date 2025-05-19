@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(PlayerNotFoundException.class)
+    @ExceptionHandler(ImageNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleImageNotFoundException(final ImageNotFoundException e) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
