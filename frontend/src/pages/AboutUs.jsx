@@ -5,6 +5,7 @@ import "./AboutUs.scss";
 
 const owner1 = require("../assets/owner1.JPG");
 const owner2 = require("../assets/owner2.jpeg");
+const owner3 = require("../assets/owner3.jpg");
 
 const owners = [
   {
@@ -93,7 +94,32 @@ const owners = [
     ),
     accentColor: "#3498db", 
   },
-  
+  {
+    id: "daniel",
+    name: "Sajó Dániel",
+    image: owner3,
+    description: (
+      <>
+        <p>
+          <strong>Football has defined my life since childhood.</strong> I first stepped onto the pitch at the age of six, and until I was 28, football was part of my everyday life. I developed as a youth player at <strong>Ferencváros</strong>, and from <strong>U15 to U19</strong> I was a regular member of the Hungarian national youth teams. As a senior player, I competed in the Hungarian third division (<strong>NB III</strong>), but my passion for the game never faded—it simply evolved.
+        </p>
+
+        <p>
+          Over the years, I came to realize that <strong>real value in football isn’t only created on the pitch, but off it as well</strong>. For seven years I worked as a <em>club executive, scout, operational director, and sporting director</em>—dedicating myself to discovering, developing, and supporting players in finding their place in the world of football.
+        </p>
+
+        <p>
+          As a manager, my clear goal has always been to provide the kind of support I often missed during my playing career: <strong>honest communication, long-term vision, and genuine care</strong>. I believe success isn’t measured in transfer fees, but in the kind of person and athlete a player becomes over time.
+        </p>
+
+        <p>
+          <strong>I’m not only present during transfer windows</strong>—I aim to create <em>continuous opportunities</em> for my players to grow, both on the field and in life. A good manager doesn’t just represent a player—they <strong>mentor, guide, and stand by them</strong> when it matters most.
+        </p>
+
+      </>
+    ),
+    accentColor: "#2ecc71", 
+  },
 ];
 
 const AboutUs = () => {

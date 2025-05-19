@@ -488,9 +488,10 @@ return (
         <input type="text" placeholder="Name" onChange={(e) => setPlayer({ ...player, name: e.target.value })} />
         <input type="date" onChange={(e) => setPlayer({ ...player, dateOfBirth: e.target.value })} />
         <select className="dropdown" onChange={(e) => setPlayer({ ...player, position: e.target.value })} value={player.position}>
-          <option value="CSATAR">Csatár</option>
-          <option value="KAPUS">Kapus</option>
-          <option value="VEDO">Védő</option>
+          <option value="ATTACKER">Attacker</option>
+          <option value="GOALKEEPER">Goalkeeper</option>
+          <option value="DEFENDER">Defender</option>
+          <option value="MIDFIELDER">Midfielder</option>
         </select>
         <input
           type="text"
@@ -770,9 +771,10 @@ return (
               value={editingPlayer.position}
               onChange={(e) => setEditingPlayer({ ...editingPlayer, position: e.target.value })}
             >
-              <option value="CSATAR">Csatár</option>
-              <option value="KAPUS">Kapus</option>
-              <option value="VEDO">Védő</option>
+              <option value="ATTACKER">Attacker</option>
+              <option value="GOALKEEPER">Goalkeeper</option>
+              <option value="DEFENDER">Defender</option>
+              <option value="MIDFIELDER">Midfielder</option>
             </select>
             <button onClick={handleUpdatePlayer}>Save</button>
             <button onClick={() => setEditingPlayer(null)}>Cancel</button>
