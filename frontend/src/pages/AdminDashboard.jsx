@@ -38,7 +38,7 @@ const AdminDashboard = () => {
   slogan: "",
   leg: "RIGHT",
   team: "",
-  position: "CSATAR",
+  position: "ATTACKER",
 });
   const [news, setNews] = useState({ title: "", postDate: "", briefContent: "", content: "" });
   const [players, setPlayers] = useState([]);
@@ -93,12 +93,13 @@ useEffect(() => {
         setPlayers(prev => prev.map(p => 
           p.name === createdPlayer.name ? updatedPlayer : p
         ));
+        
       } catch (uploadError) {
         toast.warning('Player created but image upload failed');
       }
     }
 
-    
+    fetchPlayers();
     setPlayer({
       name: "",
       dateOfBirth: "",
@@ -113,6 +114,9 @@ useEffect(() => {
     setPlayerImage(null);
   } catch (error) {
     toast.error('Failed to create player');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -122,9 +126,6 @@ useEffect(() => {
     try {
       
       const createdNews = await addNews(news);
-      toast.success('News created successfully!');
-
-      
       if (newsImage) {
         try {
           const updatedNews = await uploadImageForNews(createdNews.title, newsImage);
@@ -138,12 +139,14 @@ useEffect(() => {
         }
       }
 
-      
+      fetchNews();
       setNews({ title: "", postDate: "", briefContent: "", content: "" });
       setNewsImage(null);
     } catch (error) {
       toast.error('Failed to create news');
-      
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     }
   };
 
@@ -196,6 +199,9 @@ const handleEntityImageChange = (e) => {
 const handleImageUpload = async () => {
   if (!selectedEntityId || !entityImage) {
     toast.error('Please select an entity and an image');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return;
   }
 
@@ -255,7 +261,9 @@ const handleImageUpload = async () => {
     setSelectedEntityId('');
   } catch (error) {
     toast.error('Failed to upload image');
-    
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -325,6 +333,9 @@ useEffect(() => {
       fetchPlayers(); 
     } catch (error) {
       toast.error("Error updating player. Please try again.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     }
   }
 };
@@ -465,6 +476,9 @@ const handleAddService = async () => {
     setServiceImage(null);
   } catch (error) {
     toast.error('Failed to create service');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -485,7 +499,7 @@ return (
       
       <div className="form-section">
         <h3>Add Player</h3>
-        <input type="text" placeholder="Name" onChange={(e) => setPlayer({ ...player, name: e.target.value })} />
+        <input type="text" placeholder="Name" required onChange={(e) => setPlayer({ ...player, name: e.target.value })}  />
         <input type="date" onChange={(e) => setPlayer({ ...player, dateOfBirth: e.target.value })} />
         <select className="dropdown" onChange={(e) => setPlayer({ ...player, position: e.target.value })} value={player.position}>
           <option value="ATTACKER">Attacker</option>
@@ -541,7 +555,7 @@ return (
 
       <div className="form-section">
         <h3>Add News</h3>
-        <input type="text" placeholder="Title" onChange={(e) => setNews({ ...news, title: e.target.value })} />
+        <input type="text" placeholder="Title" required onChange={(e) => setNews({ ...news, title: e.target.value })} />
         <input type="date" onChange={(e) => setNews({ ...news, postDate: e.target.value })} />
         <textarea placeholder="Brief Content" onChange={(e) => setNews({ ...news, briefContent: e.target.value })}></textarea>
         <textarea placeholder="Full Content" onChange={(e) => setNews({ ...news, content: e.target.value })}></textarea>
@@ -724,6 +738,7 @@ return (
               value={editingPlayer.name}
               onChange={(e) => setEditingPlayer({ ...editingPlayer, name: e.target.value })}
               placeholder="Name"
+              
             />
             <input
               type="date"

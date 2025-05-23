@@ -14,6 +14,9 @@ export const getAllPlayers = async () => {
     const response = await axios.get(`${API_BASE_URL}/players/getAllPlayers`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return [];
   }
 };
@@ -23,6 +26,9 @@ export const getFirstFourPlayers = async () => {
     const response = await axios.get(`${API_BASE_URL}/players/getFirstFourPlayers`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return [];
   }
 };
@@ -32,6 +38,9 @@ export const getPlayerByName = async (name) => {
     const response = await axios.get(`${API_BASE_URL}/players/getPlayerByName?name=${name}`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return null;
   }
 };
@@ -51,6 +60,9 @@ export const addPlayer = async (playerData, imageFile) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to add player.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -68,7 +80,9 @@ export const updatePlayer = async (originalName, playerData) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to update player.");
-    
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -84,6 +98,9 @@ export const deletePlayer = async (name) => {
     toast.success("Player deleted successfully!");
   } catch (error) {
     toast.error("Failed to delete player.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -93,6 +110,9 @@ export const getAllNews = async () => {
     const response = await axios.get(`${API_BASE_URL}/news/getAllNews`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return [];
   }
 };
@@ -102,6 +122,9 @@ export const getFirstFourNews = async () => {
     const response = await axios.get(`${API_BASE_URL}/news/getFirstFourNews`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return [];
   }
 };
@@ -110,6 +133,9 @@ export const getNewsByTitle = async (title) => {
     const response = await axios.get(`${API_BASE_URL}/news/getNewsByTitle?title=${title}`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return null;
   }
 };
@@ -129,6 +155,9 @@ export const addNews = async (newsData, imageFile) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to add news.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -142,6 +171,9 @@ export const deleteNews = async (title) => {
     toast.success("News deleted successfully!");
   } catch (error) {
     toast.error("Failed to delete news.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   }
 };
 
@@ -160,6 +192,9 @@ export const updateNews = async (originalTitle, newsData) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to update news.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -171,6 +206,9 @@ export const getExpertiseByTitle = async (title) => {
     const response = await axios.get(`${API_BASE_URL}/expertise/getExpertiseByTitle?title=${encodedTitle}`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return null;
   }
 };
@@ -183,6 +221,9 @@ export const getAllExpertise = async () => {
     const response = await axios.get(`${API_BASE_URL}/expertise/getAllExpertise`);
     return response.data;
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return [];
   }
 };
@@ -198,6 +239,9 @@ export const createExpertise = async (expertiseData) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to create expertise.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -213,6 +257,9 @@ export const updateExpertise = async (title, expertiseData) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to update expertise.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -227,6 +274,9 @@ export const deleteExpertise = async (title) => {
     toast.success("Expertise deleted successfully!");
   } catch (error) {
     toast.error("Failed to delete expertise.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -243,6 +293,9 @@ export const createTrainer = async (title, trainerData) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to create trainer.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -257,6 +310,9 @@ export const deleteTrainer = async (title, name) => {
     toast.success("Trainer deleted successfully!");
   } catch (error) {
     toast.error("Failed to delete trainer.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -274,6 +330,9 @@ export const createStudies = async (title, studies) => {
     return response.data;
   } catch (error) {
     toast.error("Failed to create studies.");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return null;
   }
 };
@@ -299,6 +358,9 @@ export const uploadImageForPlayer = async (playerName, imageFile) => {
   } catch (error) {
    
     toast.error('Failed to upload player image.');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -323,6 +385,9 @@ export const uploadImageForNews = async (newsTitle, imageFile) => {
     return updatedNews;
   } catch (error) {
     toast.error('Failed to upload news image.');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -348,6 +413,9 @@ export const uploadImageForExpertise = async (expertiseTitle, imageFile) => {
     return updatedExpertise;
   } catch (error) {
     toast.error('Failed to upload news image.');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -372,6 +440,9 @@ export const uploadImageForTrainer = async (trainerName, imageFile) => {
     return updatedTrainer;
   } catch (error) {
     toast.error('Failed to upload trainer image.');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     throw error;
   }
 };
@@ -389,6 +460,9 @@ export const downloadImage = async (fileName) => {
     });
     return URL.createObjectURL(response.data);
   } catch (error) {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
     return null;
   }
 };
